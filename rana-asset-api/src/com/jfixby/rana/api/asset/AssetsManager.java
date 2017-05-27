@@ -34,6 +34,10 @@ public class AssetsManager {
 		invoke().unRegisterAssetsContainer(container);
 	}
 
+	public static void unRegisterAssetsContainers (final Collection<SealedAssetsContainer> containers) {
+		invoke().unRegisterAssetsContainers(containers);
+	}
+
 	public static AssetHandler obtainAsset (final ID asset_id, final AssetsConsumer consumer) {
 		return invoke().obtainAsset(asset_id, consumer);
 	}

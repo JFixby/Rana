@@ -7,6 +7,8 @@ import com.jfixby.rana.api.asset.AssetsManager;
 import com.jfixby.rana.api.asset.SealedAssetsContainer;
 import com.jfixby.rana.api.format.PackageFormat;
 import com.jfixby.rana.api.format.StandardPackageFormats;
+import com.jfixby.rana.api.loader.PackageReader;
+import com.jfixby.rana.api.loader.PackageReaderInput;
 import com.jfixby.rana.api.loader.PackagesLoader;
 import com.jfixby.rana.api.pkg.PackageHandler;
 import com.jfixby.rana.api.pkg.PackageSearchParameters;
@@ -16,11 +18,11 @@ import com.jfixby.rana.red.loader.RedPackagesLoader;
 import com.jfixby.red.engine.core.resources.RedAssetsManager;
 import com.jfixby.red.triplane.resources.fsbased.RedPackageManager;
 import com.jfixby.red.triplane.resources.fsbased.RedResourcesManagerSpecs;
+import com.jfixby.scarabei.api.collections.Collection;
 import com.jfixby.scarabei.api.desktop.ScarabeiDesktop;
 import com.jfixby.scarabei.api.file.File;
 import com.jfixby.scarabei.api.file.LocalFileSystem;
 import com.jfixby.scarabei.api.json.Json;
-import com.jfixby.scarabei.api.log.L;
 import com.jfixby.scarabei.gson.GoogleGson;
 
 public class TestRana {
@@ -41,6 +43,8 @@ public class TestRana {
 		resman_spec.readResourcesConfigFile = true;
 		final RedPackageManager resman = new RedPackageManager(resman_spec);
 		PackagesManager.installComponent(resman);
+		AssetsManager.installComponent(new RedAssetsManager());
+		PackagesLoader.installComponent(new RedPackagesLoader());
 
 // RanaPackageManager.printAllIndexes();
 		final PackageFormat format = StandardPackageFormats.libGDX.Atlas;
@@ -51,14 +55,26 @@ public class TestRana {
 // resiult.print();
 
 		final PackageHandler packagebest = resiult.getBest();
-		L.d();
-		packagebest.print();
 
-		AssetsManager.installComponent(new RedAssetsManager());
-		PackagesLoader.installComponent(new RedPackagesLoader());
+		final Collection<PackageReader> readers = PackagesLoader.findPackageReaders(format);
+		final PackageReader reader = readers.getLast();
 
-		final SealedAssetsContainer container = null;
-		AssetsManager.registerAssetsContainer(container);
+		final PackageReaderInput readArgs = new PackageReaderInput();
+		readArgs.packageRootFile = packagebest.getRootFile(true);
+		readArgs.assetsContainer = AssetsManager.newAssetsContainer();
+		reader.doReadPackage(readArgs);
+		AssetsManager.registerAssetsContainer(readArgs.assetsContainer.seal());
+		final Collection<SealedAssetsContainer> unused = AssetsManager.listUnusedContainers();
+		unused.print("unused");
+		AssetsManager.unRegisterAssetsContainers(unused);
+
+		PackagesLoader.printInstalledPackageReaders();
+
+// L.d();f
+// packagebest.print();
+//
+// final SealedAssetsContainer container = null;
+// AssetsManager.registerAssetsContainer(container);
 
 	}
 

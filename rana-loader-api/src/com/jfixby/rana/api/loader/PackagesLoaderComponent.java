@@ -7,7 +7,7 @@ import com.jfixby.scarabei.api.collections.Collection;
 public interface PackagesLoaderComponent {
 	Collection<PackageReader> findPackageReaders (PackageFormat format);
 
-	void registerPackageReader (PackageReader loader);
+	void registerPackageReader (PackageReader reader);
 
 	Collection<PackageFormat> listAcceptablePackageFormats ();
 
