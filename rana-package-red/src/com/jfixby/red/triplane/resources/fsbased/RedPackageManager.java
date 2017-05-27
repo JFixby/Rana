@@ -267,11 +267,13 @@ public class RedPackageManager implements PackagesManagerComponent {
 		PackageManagerConfig config = null;
 		try {
 			final File resources_config_file = applicationHome.child(PackageManagerConfig.FILE_NAME);
-			L.d("reading", resources_config_file);
+			
 
 			if (!resources_config_file.exists()) {
 				return null;
 			}
+			
+			L.d("reading", resources_config_file);
 
 			final String configString = resources_config_file.readToString();
 
