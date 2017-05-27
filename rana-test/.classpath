@@ -36,8 +36,8 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/scarabei-rmi-file-server"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/scarabei-rmi-server"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/Rana"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/rana-pkg-api"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/rana-pkg-red"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/rana-package-api"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/rana-package-red"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/rana-asset-api"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/rana-asset-red"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/rana-loader-api"/>

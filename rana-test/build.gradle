@@ -4,11 +4,15 @@ dependencies {
              compile "com.google.code.gson:gson:2.8.0"
              compile "com.github.Scarabei.Scarabei:scarabei-gson:$scarabeiVersion"
              
-             compile project(":rana-pkg-api")
-             compile project(":rana-pkg-red")
+             compile project(":rana-package-api")
+             compile project(":rana-package-red")
 
-            
+             compile project(":rana-asset-api")
+             compile project(":rana-asset-red")
              
+	         compile project(":rana-loader-api")
+	         compile project(":rana-loader-red")
+	         
 	         
 	         testCompile 'junit:junit:4.10'
 

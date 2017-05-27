@@ -1,7 +1,0 @@
-
-
-
-
-dependencies {
-    compile project(":rana-pkg-api")
-}
