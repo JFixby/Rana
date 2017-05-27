@@ -4,7 +4,7 @@ package com.jfixby.rana.api.asset;
 import com.jfixby.scarabei.api.assets.ID;
 import com.jfixby.scarabei.api.collections.Collection;
 
-public interface AssetsManagerComponent {
+public interface LoadedAssetsComponent {
 
 	AssetHandler obtainAsset (ID asset_id, AssetsConsumer consumer);
 

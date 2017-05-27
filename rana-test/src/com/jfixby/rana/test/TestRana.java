@@ -3,7 +3,7 @@ package com.jfixby.rana.test;
 
 import java.io.IOException;
 
-import com.jfixby.rana.api.asset.AssetsManager;
+import com.jfixby.rana.api.asset.LoadedAssets;
 import com.jfixby.rana.api.asset.SealedAssetsContainer;
 import com.jfixby.rana.api.format.PackageFormat;
 import com.jfixby.rana.api.loader.PackageReader;
@@ -14,7 +14,7 @@ import com.jfixby.rana.api.pkg.PackageSearchParameters;
 import com.jfixby.rana.api.pkg.PackageSearchResult;
 import com.jfixby.rana.api.pkg.PackagesManager;
 import com.jfixby.rana.red.loader.RedPackagesLoader;
-import com.jfixby.red.engine.core.resources.RedAssetsManager;
+import com.jfixby.red.engine.core.resources.RedLoadedAssets;
 import com.jfixby.red.triplane.resources.fsbased.RedPackageManager;
 import com.jfixby.red.triplane.resources.fsbased.RedResourcesManagerSpecs;
 import com.jfixby.scarabei.api.collections.Collection;
@@ -42,7 +42,7 @@ public class TestRana {
 		resman_spec.readResourcesConfigFile = true;
 		final RedPackageManager resman = new RedPackageManager(resman_spec);
 		PackagesManager.installComponent(resman);
-		AssetsManager.installComponent(new RedAssetsManager());
+		LoadedAssets.installComponent(new RedLoadedAssets());
 		PackagesLoader.installComponent(new RedPackagesLoader());
 
 // PackagesManager.printAllIndexes();
@@ -61,12 +61,12 @@ public class TestRana {
 
 		final PackageReaderInput readArgs = new PackageReaderInput();
 		readArgs.packageRootFile = packagebest.getRootFile(true);
-		readArgs.assetsContainer = AssetsManager.newAssetsContainer();
+		readArgs.assetsContainer = LoadedAssets.newAssetsContainer();
 		reader.doReadPackage(readArgs);
-		AssetsManager.registerAssetsContainer(readArgs.assetsContainer.seal());
-		final Collection<SealedAssetsContainer> unused = AssetsManager.listUnusedContainers();
+		LoadedAssets.registerAssetsContainer(readArgs.assetsContainer.seal());
+		final Collection<SealedAssetsContainer> unused = LoadedAssets.listUnusedContainers();
 		unused.print("unused");
-		AssetsManager.unRegisterAssetsContainers(unused);
+		LoadedAssets.unRegisterAssetsContainers(unused);
 
 		PackagesLoader.printInstalledPackageReaders();
 

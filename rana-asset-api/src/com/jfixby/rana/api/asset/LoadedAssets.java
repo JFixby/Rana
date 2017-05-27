@@ -5,12 +5,14 @@ import com.jfixby.scarabei.api.ComponentInstaller;
 import com.jfixby.scarabei.api.assets.ID;
 import com.jfixby.scarabei.api.collections.Collection;
 
-public class AssetsManager {
+public class LoadedAssets {
 
-	static private ComponentInstaller<AssetsManagerComponent> componentInstaller = new ComponentInstaller<AssetsManagerComponent>(
-		"AssetsManager");
+	public static final String ReportUnusedAssets = "ReportUnusedAssets";
 
-	public static final void installComponent (final AssetsManagerComponent component_to_install) {
+	static private ComponentInstaller<LoadedAssetsComponent> componentInstaller = new ComponentInstaller<LoadedAssetsComponent>(
+		"LoadedAssets");
+
+	public static final void installComponent (final LoadedAssetsComponent component_to_install) {
 		componentInstaller.installComponent(component_to_install);
 	}
 
@@ -18,11 +20,11 @@ public class AssetsManager {
 		componentInstaller.installComponent(className);
 	}
 
-	public static final AssetsManagerComponent invoke () {
+	public static final LoadedAssetsComponent invoke () {
 		return componentInstaller.invokeComponent();
 	}
 
-	public static final AssetsManagerComponent component () {
+	public static final LoadedAssetsComponent component () {
 		return componentInstaller.getComponent();
 	}
 

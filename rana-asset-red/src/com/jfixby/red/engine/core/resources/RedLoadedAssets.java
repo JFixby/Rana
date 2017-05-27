@@ -4,7 +4,7 @@ package com.jfixby.red.engine.core.resources;
 import com.jfixby.rana.api.asset.AssetHandler;
 import com.jfixby.rana.api.asset.AssetsConsumer;
 import com.jfixby.rana.api.asset.AssetsContainer;
-import com.jfixby.rana.api.asset.AssetsManagerComponent;
+import com.jfixby.rana.api.asset.LoadedAssetsComponent;
 import com.jfixby.rana.api.asset.SealedAssetsContainer;
 import com.jfixby.scarabei.api.assets.ID;
 import com.jfixby.scarabei.api.collections.Collection;
@@ -17,18 +17,13 @@ import com.jfixby.scarabei.api.debug.Debug;
 import com.jfixby.scarabei.api.err.Err;
 import com.jfixby.scarabei.api.log.L;
 
-public class RedAssetsManager implements AssetsManagerComponent {
+public class RedLoadedAssets implements LoadedAssetsComponent {
 
 	final AssetUsers asset_users = new AssetUsers(this);
 
 	final Assets assets = new Assets();
 // final Map<AssetsContainer, Set<AssetID>> containers = Collections.newMap();
 	int i = 0;
-	final AssetsConsumer stub_consumer = new AssetsConsumer() {
-		{
-
-		}
-	};
 
 // @Override
 // public void checkAll () {
@@ -280,7 +275,7 @@ public class RedAssetsManager implements AssetsManagerComponent {
 		final List<ID> unusedAssets = this.assets.keys().filter(new CollectionFilter<ID>() {
 			@Override
 			public boolean fits (final ID key) {
-				return RedAssetsManager.this.asset_users.getNumberOfUsers(key) == 0;
+				return RedLoadedAssets.this.asset_users.getNumberOfUsers(key) == 0;
 			}
 		});
 		final List<ID> assetsToDrop = unusedAssets;
