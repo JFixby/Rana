@@ -8,7 +8,7 @@ import com.jfixby.scarabei.api.collections.Collection;
 import com.jfixby.scarabei.api.file.File;
 import com.jfixby.scarabei.api.net.http.HttpURL;
 
-public interface RanaPackageManagerComponent {
+public interface PackagesManagerComponent {
 
 // PackageSearchParameters newSearchParameters ();
 

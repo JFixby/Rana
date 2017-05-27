@@ -9,7 +9,7 @@ import com.jfixby.rana.api.cfg.ResourcesConfigFile;
 import com.jfixby.rana.api.pkg.DeployRemoteBanksTask;
 import com.jfixby.rana.api.pkg.PackageSearchParameters;
 import com.jfixby.rana.api.pkg.PackageSearchResult;
-import com.jfixby.rana.api.pkg.RanaPackageManagerComponent;
+import com.jfixby.rana.api.pkg.PackagesManagerComponent;
 import com.jfixby.rana.api.pkg.Resource;
 import com.jfixby.rana.api.pkg.ResourceRebuildIndexListener;
 import com.jfixby.rana.api.pkg.ResourceSpecs;
@@ -34,7 +34,7 @@ import com.jfixby.scarabei.api.net.http.HttpFileSystem;
 import com.jfixby.scarabei.api.net.http.HttpFileSystemSpecs;
 import com.jfixby.scarabei.api.net.http.HttpURL;
 
-public class RedPackageManager implements RanaPackageManagerComponent {
+public class RedPackageManager implements PackagesManagerComponent {
 
 	private static final boolean COLLECT_TANKS = true;
 	private final File assets_cache_folder;

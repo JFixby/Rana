@@ -6,12 +6,12 @@ import java.io.IOException;
 import com.jfixby.scarabei.api.ComponentInstaller;
 import com.jfixby.scarabei.api.assets.ID;
 
-public class RanaPackageManager {
+public class PackagesManager {
 
-	static private ComponentInstaller<RanaPackageManagerComponent> componentInstaller = new ComponentInstaller<RanaPackageManagerComponent>(
-		"ResourcesManager");
+	static private ComponentInstaller<PackagesManagerComponent> componentInstaller = new ComponentInstaller<PackagesManagerComponent>(
+		"PackagesManager");
 
-	public static final void installComponent (final RanaPackageManagerComponent component_to_install) {
+	public static final void installComponent (final PackagesManagerComponent component_to_install) {
 		componentInstaller.installComponent(component_to_install);
 	}
 
@@ -19,11 +19,11 @@ public class RanaPackageManager {
 		componentInstaller.installComponent(className);
 	}
 
-	public static final RanaPackageManagerComponent invoke () {
+	public static final PackagesManagerComponent invoke () {
 		return componentInstaller.invokeComponent();
 	}
 
-	public static final RanaPackageManagerComponent component () {
+	public static final PackagesManagerComponent component () {
 		return componentInstaller.getComponent();
 	}
 

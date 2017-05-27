@@ -10,7 +10,7 @@ import com.jfixby.rana.api.format.StandardPackageFormats;
 import com.jfixby.rana.api.pkg.PackageHandler;
 import com.jfixby.rana.api.pkg.PackageSearchParameters;
 import com.jfixby.rana.api.pkg.PackageSearchResult;
-import com.jfixby.rana.api.pkg.RanaPackageManager;
+import com.jfixby.rana.api.pkg.PackagesManager;
 import com.jfixby.red.engine.core.resources.RedAssetsManager;
 import com.jfixby.red.triplane.resources.fsbased.RedPackageManager;
 import com.jfixby.red.triplane.resources.fsbased.RedResourcesManagerSpecs;
@@ -38,14 +38,14 @@ public class TestRana {
 		resman_spec.assets_folder = assets_folder;
 		resman_spec.readResourcesConfigFile = true;
 		final RedPackageManager resman = new RedPackageManager(resman_spec);
-		RanaPackageManager.installComponent(resman);
+		PackagesManager.installComponent(resman);
 
 // RanaPackageManager.printAllIndexes();
 		final PackageFormat format = StandardPackageFormats.libGDX.Atlas;
 		final PackageSearchParameters search_params = new PackageSearchParameters();
 		search_params.getAllFlag = (true);
 		search_params.acceptablePackageFormats.add(format);
-		final PackageSearchResult resiult = RanaPackageManager.findPackages(search_params);
+		final PackageSearchResult resiult = PackagesManager.findPackages(search_params);
 // resiult.print();
 
 		final PackageHandler packagebest = resiult.getBest();
