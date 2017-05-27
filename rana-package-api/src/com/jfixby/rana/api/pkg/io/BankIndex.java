@@ -1,11 +1,10 @@
 
-package com.jfixby.rana.api.pkg.bank;
+package com.jfixby.rana.api.pkg.io;
 
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.LinkedHashMap;
 
-import com.jfixby.rana.api.pkg.fs.PackageDescriptor;
 import com.jfixby.scarabei.api.io.GZipInputStream;
 import com.jfixby.scarabei.api.io.GZipOutputStream;
 import com.jfixby.scarabei.api.io.IO;

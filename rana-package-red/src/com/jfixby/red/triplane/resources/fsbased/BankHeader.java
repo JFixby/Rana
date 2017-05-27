@@ -1,7 +1,7 @@
 
 package com.jfixby.red.triplane.resources.fsbased;
 
-import com.jfixby.rana.api.pkg.bank.BankHeaderInfo;
+import com.jfixby.rana.api.pkg.io.BankHeaderInfo;
 import com.jfixby.scarabei.api.debug.Debug;
 import com.jfixby.scarabei.api.file.File;
 

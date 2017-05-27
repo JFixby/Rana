@@ -3,7 +3,7 @@ package com.jfixby.red.engine.core.resources;
 
 import java.io.IOException;
 
-import com.jfixby.rana.api.pkg.fs.PackageDescriptor;
+import com.jfixby.rana.api.pkg.io.PackageDescriptor;
 import com.jfixby.scarabei.api.assets.ID;
 import com.jfixby.scarabei.api.collections.Collection;
 import com.jfixby.scarabei.api.debug.Debug;

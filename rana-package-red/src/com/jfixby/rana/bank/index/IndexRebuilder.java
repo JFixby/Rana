@@ -3,9 +3,9 @@ package com.jfixby.rana.bank.index;
 
 import java.io.IOException;
 
-import com.jfixby.rana.api.pkg.bank.BankHeaderInfo;
-import com.jfixby.rana.api.pkg.bank.BankIndex;
-import com.jfixby.rana.api.pkg.fs.PackageDescriptor;
+import com.jfixby.rana.api.pkg.io.BankHeaderInfo;
+import com.jfixby.rana.api.pkg.io.BankIndex;
+import com.jfixby.rana.api.pkg.io.PackageDescriptor;
 import com.jfixby.scarabei.api.collections.Collection;
 import com.jfixby.scarabei.api.debug.Debug;
 import com.jfixby.scarabei.api.err.Err;

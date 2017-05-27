@@ -3,9 +3,6 @@ package com.jfixby.red.triplane.resources.fsbased;
 
 import java.io.IOException;
 
-import com.jfixby.rana.api.cfg.AssetsFolder;
-import com.jfixby.rana.api.cfg.RemoteAssetsFolder;
-import com.jfixby.rana.api.cfg.ResourcesConfigFile;
 import com.jfixby.rana.api.pkg.DeployRemoteBanksTask;
 import com.jfixby.rana.api.pkg.PackageSearchParameters;
 import com.jfixby.rana.api.pkg.PackageSearchResult;
@@ -14,7 +11,10 @@ import com.jfixby.rana.api.pkg.Resource;
 import com.jfixby.rana.api.pkg.ResourceRebuildIndexListener;
 import com.jfixby.rana.api.pkg.ResourceSpecs;
 import com.jfixby.rana.api.pkg.ResourcesGroup;
-import com.jfixby.rana.api.pkg.bank.BankHeaderInfo;
+import com.jfixby.rana.api.pkg.io.BankHeaderInfo;
+import com.jfixby.rana.api.pkg.io.cfg.HttpAssetsFolder;
+import com.jfixby.rana.api.pkg.io.cfg.LocalAssetsFolder;
+import com.jfixby.rana.api.pkg.io.cfg.PackageManagerConfig;
 import com.jfixby.scarabei.api.assets.ID;
 import com.jfixby.scarabei.api.assets.Names;
 import com.jfixby.scarabei.api.collections.Collection;
@@ -55,10 +55,10 @@ public class RedPackageManager implements PackagesManagerComponent {
 		if (this.readResourcesConfigFile) {
 // final File resourcesConfigFile = LocalFileSystem.ApplicationHome().child(ResourcesConfigFile.FILE_NAME);
 
-			final ResourcesConfigFile local_config = this.loadConfigFile(LocalFileSystem.ApplicationHome());
+			final PackageManagerConfig local_config = this.loadConfigFile(LocalFileSystem.ApplicationHome());
 			if (local_config != null) {
-				for (final AssetsFolder folder : local_config.local_assets) {
-					final String java_path = folder.java_path;
+				for (final LocalAssetsFolder folder : local_config.local_banks) {
+					final String java_path = folder.path;
 					final File dir = LocalFileSystem.newFile(java_path);
 					try {
 						final Collection<ResourcesGroup> locals = this.loadAssetsFolder(dir, listener);
@@ -67,11 +67,11 @@ public class RedPackageManager implements PackagesManagerComponent {
 					}
 				}
 
-				for (final RemoteAssetsFolder folder : local_config.remote_assets) {
+				for (final HttpAssetsFolder folder : local_config.remote_banks) {
 
 					final List<String> tanks = Collections.newList(folder.tanks);
 // final HttpURL bankURL = Http.newURL("https://s3.eu-central-1.amazonaws.com/com.red-triplane.assets/bank-tinto/");
-					final HttpURL bankURL = Http.newURL(folder.bank_url_string);
+					final HttpURL bankURL = Http.newURL(folder.bank_url);
 					final RemoteBankSettings element = new RemoteBankSettings();
 					element.bankURL = Debug.checkNull("remote bank url", bankURL);
 					element.tanks.addAll(tanks);
@@ -262,11 +262,11 @@ public class RedPackageManager implements PackagesManagerComponent {
 		return null;
 	}
 
-	public ResourcesConfigFile loadConfigFile (final File applicationHome) {
+	public PackageManagerConfig loadConfigFile (final File applicationHome) {
 
-		ResourcesConfigFile config = null;
+		PackageManagerConfig config = null;
 		try {
-			final File resources_config_file = applicationHome.child(ResourcesConfigFile.FILE_NAME);
+			final File resources_config_file = applicationHome.child(PackageManagerConfig.FILE_NAME);
 			L.d("reading", resources_config_file);
 
 			if (!resources_config_file.exists()) {
@@ -275,7 +275,7 @@ public class RedPackageManager implements PackagesManagerComponent {
 
 			final String configString = resources_config_file.readToString();
 
-			config = Json.deserializeFromString(ResourcesConfigFile.class, configString);
+			config = Json.deserializeFromString(PackageManagerConfig.class, configString);
 			return config;
 		} catch (final IOException e) {
 			e.printStackTrace();
@@ -368,14 +368,14 @@ public class RedPackageManager implements PackagesManagerComponent {
 		this.resources.print("resources");
 	}
 
-	private ResourcesConfigFile tryToMakeConfigFile (final File applicationHome) {
-		final ResourcesConfigFile config = new ResourcesConfigFile();
+	private PackageManagerConfig tryToMakeConfigFile (final File applicationHome) {
+		final PackageManagerConfig config = new PackageManagerConfig();
 
-		final AssetsFolder assets_folder = new AssetsFolder();
-		assets_folder.java_path = "path?";
-		config.local_assets.add(assets_folder);
+		final LocalAssetsFolder assets_folder = new LocalAssetsFolder();
+		assets_folder.path = "path?";
+		config.local_banks.add(assets_folder);
 
-		final File resources_config_file = applicationHome.child(ResourcesConfigFile.FILE_NAME);
+		final File resources_config_file = applicationHome.child(PackageManagerConfig.FILE_NAME);
 		try {
 			if (resources_config_file.exists()) {
 				L.e("file exists", resources_config_file);

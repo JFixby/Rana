@@ -8,7 +8,7 @@ import com.jfixby.rana.api.pkg.PACKAGE_STATUS;
 import com.jfixby.rana.api.pkg.PackageHandler;
 import com.jfixby.rana.api.pkg.PackageInstallerListener;
 import com.jfixby.rana.api.pkg.PackageVersion;
-import com.jfixby.rana.api.pkg.fs.PackageDescriptor;
+import com.jfixby.rana.api.pkg.io.PackageDescriptor;
 import com.jfixby.scarabei.api.assets.ID;
 import com.jfixby.scarabei.api.collections.Collection;
 import com.jfixby.scarabei.api.collections.Collections;

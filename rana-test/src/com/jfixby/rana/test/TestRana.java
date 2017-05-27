@@ -45,7 +45,8 @@ public class TestRana {
 		AssetsManager.installComponent(new RedAssetsManager());
 		PackagesLoader.installComponent(new RedPackagesLoader());
 
-// RanaPackageManager.printAllIndexes();
+// PackagesManager.printAllIndexes();
+
 		final PackageFormat format = new PackageFormat("test");
 		final PackageSearchParameters search_params = new PackageSearchParameters();
 		search_params.getAllFlag = (true);

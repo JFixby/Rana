@@ -8,18 +8,15 @@ import com.jfixby.rana.api.pkg.PackageSearchResult;
 import com.jfixby.rana.api.pkg.Resource;
 import com.jfixby.rana.api.pkg.ResourceRebuildIndexListener;
 import com.jfixby.rana.api.pkg.ResourceSpecs;
-import com.jfixby.rana.api.pkg.bank.BankIndex;
-import com.jfixby.rana.api.pkg.fs.PackageDescriptor;
+import com.jfixby.rana.api.pkg.io.BankIndex;
+import com.jfixby.rana.api.pkg.io.PackageDescriptor;
 import com.jfixby.scarabei.api.debug.Debug;
-import com.jfixby.scarabei.api.err.Err;
 import com.jfixby.scarabei.api.file.File;
 import com.jfixby.scarabei.api.file.FileInputStream;
 import com.jfixby.scarabei.api.file.FileSystem;
 import com.jfixby.scarabei.api.file.FilesList;
 import com.jfixby.scarabei.api.json.Json;
 import com.jfixby.scarabei.api.log.L;
-import com.jfixby.scarabei.api.sys.settings.ExecutionMode;
-import com.jfixby.scarabei.api.sys.settings.SystemSettings;
 
 public class RedResource implements Resource {
 
@@ -155,17 +152,18 @@ public class RedResource implements Resource {
 
 	private void try_to_index (final File package_folder) {
 		final FileSystem FS = package_folder.getFileSystem();
-		final File file = package_folder.child(PackageDescriptor.PACKAGE_DESCRIPTOR_FILE_NAME);
-		try {
-			final PackageDescriptor descriptor = file.readData(PackageDescriptor.class);
-			this.index(descriptor, package_folder);
-		} catch (final Exception e) {
-			L.e(e.toString());
-			e.printStackTrace();
+		final File json_file = package_folder.child(PackageDescriptor.PACKAGE_DESCRIPTOR_FILE_NAME);
+// try {
+// final PackageDescriptor descriptor = file.readData(PackageDescriptor.class);
+// this.index(descriptor, package_folder);
+// } catch (final Exception e)
+		{
+// L.d("reading json", file);
+// L.e(e.toString());
+// e.printStackTrace();
 
-			final File json_file = package_folder.child(PackageDescriptor.PACKAGE_DESCRIPTOR_FILE_NAME + ".json");
 			try {
-				L.e("retry json file", json_file);
+// L.e("retry json file", json_file);
 				final String json = json_file.readToString();
 
 				final PackageDescriptor descriptor = Json.deserializeFromString(PackageDescriptor.class, json);
@@ -183,15 +181,15 @@ public class RedResource implements Resource {
 			}
 
 			try {
-				L.d(file.readToString());
+				L.d(json_file.readToString());
 			} catch (final IOException e1) {
 				// e1.printStackTrace();
 			}
-			L.e("failed to read", file);
+			L.e("failed to read", json_file);
 
-			if (SystemSettings.executionModeCovers(ExecutionMode.EARLY_DEVELOPMENT)) {
-				Err.reportError(file + " " + e);
-			}
+// if (SystemSettings.executionModeCovers(ExecutionMode.EARLY_DEVELOPMENT)) {
+// Err.reportError(json_file + " " + e);
+// }
 		}
 	}
 

@@ -3,7 +3,7 @@ package com.jfixby.r3.fokker.fs;
 
 import java.io.IOException;
 
-import com.jfixby.rana.api.pkg.fs.PackageDescriptor;
+import com.jfixby.rana.api.pkg.io.PackageDescriptor;
 import com.jfixby.scarabei.api.base64.Base64;
 import com.jfixby.scarabei.api.collections.Collections;
 import com.jfixby.scarabei.api.collections.List;

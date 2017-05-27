@@ -1,5 +1,5 @@
 
-package com.jfixby.rana.api.pkg.fs;
+package com.jfixby.rana.api.pkg.io;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -16,7 +16,7 @@ public class PackageDescriptor implements Serializable {
 		super();
 	}
 
-	public static final String PACKAGE_DESCRIPTOR_FILE_NAME = "package.descriptor";
+	public static final String PACKAGE_DESCRIPTOR_FILE_NAME = "package.descriptor.json";
 	public static final String PACKAGE_CONTENT_FOLDER = "content";
 
 	public String format;

@@ -1,5 +1,5 @@
 
-package com.jfixby.rana.api.pkg.bank;
+package com.jfixby.rana.api.pkg.io;
 
 public class BankHeaderInfo {
 
