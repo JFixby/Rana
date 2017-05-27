@@ -48,7 +48,7 @@ public class TestRana {
 		LoadedAssets.installComponent(new RedLoadedAssets());
 		PackagesLoader.installComponent(new RedPackagesLoader());
 		AssetsManager.installComponent(new RedAssetsManager());
-		AssetsManager.autoResolveAsset(Names.newID("hello"));
+		AssetsManager.autoResolveAsset(Names.newID("com.jfixby.tinto.preloader.psd.raster_0"));
 // PackagesManager.printAllIndexes();
 
 		final PackageFormat format = new PackageFormat("test");
