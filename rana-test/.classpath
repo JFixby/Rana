@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6/"/>
+	<classpathentry kind="con" path="org.eclipse.buildship.core.gradleclasspathcontainer"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/rana-api"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/scarabei-apache-cmns"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/scarabei-api"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/scarabei-api-android"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/scarabei-api-desktop"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/scarabei-api-gwt"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/scarabei-api-ios"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/scarabei-aws-android"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/scarabei-aws-android-s3"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/scarabei-aws-android-ses"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/scarabei-aws-android-sns"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/scarabei-aws-android-sqs"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/scarabei-aws-api"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/scarabei-aws-desktop"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/scarabei-aws-red"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/scarabei-bt-api"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/scarabei-bt-desktop"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/scarabei-bt-red"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/scarabei-db-api"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/scarabei-db-mysql"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/scarabei-gson"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/scarabei-red"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/scarabei-red-android"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/scarabei-red-desktop"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/scarabei-red-gdx"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/scarabei-red-gwt"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/scarabei-red-ios"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/scarabei-red-log-mq"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/scarabei-rmi-api"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/scarabei-rmi-client"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/scarabei-rmi-file-server"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/scarabei-rmi-server"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/Rana"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/rana-pkg-api"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/rana-pkg-red"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/rana-res-api"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/rana-res-red"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

@@ -1,0 +1,7 @@
+include 'rana-api'
+include 'rana-pkg-api'
+include 'rana-pkg-red'
+include 'rana-res-api'
+include 'rana-res-red'
+include 'rana-test'
+
