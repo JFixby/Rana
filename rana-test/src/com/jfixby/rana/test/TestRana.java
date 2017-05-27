@@ -20,7 +20,6 @@ import com.jfixby.red.engine.core.resources.RedAssetsManager;
 import com.jfixby.red.engine.core.resources.RedLoadedAssets;
 import com.jfixby.red.triplane.resources.fsbased.RedPackageManager;
 import com.jfixby.red.triplane.resources.fsbased.RedResourcesManagerSpecs;
-import com.jfixby.scarabei.api.assets.Names;
 import com.jfixby.scarabei.api.collections.Collection;
 import com.jfixby.scarabei.api.desktop.ScarabeiDesktop;
 import com.jfixby.scarabei.api.file.File;
@@ -49,7 +48,7 @@ public class TestRana {
 		LoadedAssets.installComponent(new RedLoadedAssets());
 		PackagesLoader.installComponent(new RedPackagesLoader());
 		AssetsManager.installComponent(new RedAssetsManager());
-		AssetsManager.autoResolveAsset(Names.newID("com.jfixby.tinto.preloader.psd.raster_0"));
+// AssetsManager.autoResolveAsset(Names.newID("com.jfixby.tinto.preloader.psd.raster_0"));
 		final AssetsPurgeResult purge = AssetsManager.purge();
 		purge.print();
 // PackagesManager.printAllIndexes();
