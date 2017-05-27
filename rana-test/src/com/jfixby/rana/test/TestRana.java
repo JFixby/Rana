@@ -6,7 +6,6 @@ import java.io.IOException;
 import com.jfixby.rana.api.asset.AssetsManager;
 import com.jfixby.rana.api.asset.SealedAssetsContainer;
 import com.jfixby.rana.api.format.PackageFormat;
-import com.jfixby.rana.api.format.StandardPackageFormats;
 import com.jfixby.rana.api.loader.PackageReader;
 import com.jfixby.rana.api.loader.PackageReaderInput;
 import com.jfixby.rana.api.loader.PackagesLoader;
@@ -47,7 +46,7 @@ public class TestRana {
 		PackagesLoader.installComponent(new RedPackagesLoader());
 
 // RanaPackageManager.printAllIndexes();
-		final PackageFormat format = StandardPackageFormats.libGDX.Atlas;
+		final PackageFormat format = new PackageFormat("test");
 		final PackageSearchParameters search_params = new PackageSearchParameters();
 		search_params.getAllFlag = (true);
 		search_params.acceptablePackageFormats.add(format);
