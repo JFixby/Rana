@@ -4,7 +4,6 @@ package com.jfixby.red.engine.core.resources;
 import java.io.IOException;
 
 import com.jfixby.rana.api.asset.AssetHandler;
-import com.jfixby.rana.api.asset.AssetResolutionException;
 import com.jfixby.rana.api.asset.AssetsConsumer;
 import com.jfixby.rana.api.asset.AssetsManagerComponent;
 import com.jfixby.rana.api.asset.LoadedAssets;
@@ -20,7 +19,6 @@ import com.jfixby.rana.api.pkg.PackagesManager;
 import com.jfixby.scarabei.api.assets.ID;
 import com.jfixby.scarabei.api.collections.Collection;
 import com.jfixby.scarabei.api.debug.Debug;
-import com.jfixby.scarabei.api.err.Err;
 import com.jfixby.scarabei.api.log.L;
 import com.jfixby.scarabei.api.sys.settings.ExecutionMode;
 import com.jfixby.scarabei.api.sys.settings.SystemSettings;
@@ -29,7 +27,7 @@ public class RedAssetsManager implements AssetsManagerComponent {
 	final AssetsConsumer stub_consumer = new StubAssetsConsumer();
 
 	@Override
-	public void autoResolveAsset (final ID dependency) throws AssetResolutionException {
+	public void autoResolveAsset (final ID dependency) throws IOException {
 
 		final AssetHandler asset_entry = LoadedAssets.obtainAsset(dependency, this.stub_consumer);
 		L.e("AssetsConsumer leak public boolean autoResolveAsset (final ID dependency, final PackageReaderListener listener)");
@@ -45,7 +43,7 @@ public class RedAssetsManager implements AssetsManagerComponent {
 		try {
 			this.resolve(dependency, true);
 		} catch (final IOException e) {
-			throw new AssetResolutionException("Failed to resolve asset[" + dependency + "]", e);
+			throw new IOException("Failed to resolve asset[" + dependency + "]", e);
 		}
 
 	}
@@ -75,7 +73,8 @@ public class RedAssetsManager implements AssetsManagerComponent {
 			if (SystemSettings.executionModeCovers(ExecutionMode.EARLY_DEVELOPMENT)) {
 				PackagesManager.printAllIndexes();
 			}
-			Err.reportError(msg);
+// Err.reportError(msg);
+			throw new IOException(msg);
 			//
 		}
 
@@ -91,8 +90,8 @@ public class RedAssetsManager implements AssetsManagerComponent {
 		final Collection<PackageReader> package_loaders = PackagesLoader.findPackageReaders(format);
 		if (package_loaders.isEmpty()) {
 			PackagesLoader.printInstalledPackageReaders();
-			L.e("Failed to read package", package_handler);
-			Err.reportError("No package reader for " + format);
+// L.e("Failed to read package", package_handler);
+			throw new IOException("Failed to read package: " + package_handler + " No package reader for " + format);
 			//
 		}
 
@@ -112,7 +111,7 @@ public class RedAssetsManager implements AssetsManagerComponent {
 	}
 
 	@Override
-	public void autoResolveAssets (final Collection<ID> dependencies) throws AssetResolutionException {
+	public void autoResolveAssets (final Collection<ID> dependencies) throws IOException {
 		Debug.checkNull("dependencies", dependencies);
 // boolean updated = true;
 		for (final ID dependency : dependencies) {
@@ -134,8 +133,9 @@ public class RedAssetsManager implements AssetsManagerComponent {
 			try {
 				this.resolve(dependency, true);
 			} catch (final IOException e) {
-				throw new AssetResolutionException("Failed to resolve asset[" + dependency + "]", e);
+				throw new IOException("Failed to resolve asset[" + dependency + "]", e);
 			}
 		}
 	}
+
 }

@@ -1,6 +1,8 @@
 
 package com.jfixby.rana.api.asset;
 
+import java.io.IOException;
+
 import com.jfixby.scarabei.api.ComponentInstaller;
 import com.jfixby.scarabei.api.assets.ID;
 import com.jfixby.scarabei.api.collections.Collection;
@@ -28,11 +30,11 @@ public class AssetsManager {
 		return componentInstaller.getComponent();
 	}
 
-	public static void autoResolveAsset (final ID dependency) throws AssetResolutionException {
+	public static void autoResolveAsset (final ID dependency) throws IOException {
 		invoke().autoResolveAsset(dependency);
 	}
 
-	public static void autoResolveAssets (final Collection<ID> dependencies) throws AssetResolutionException {
+	public static void autoResolveAssets (final Collection<ID> dependencies) throws IOException {
 		invoke().autoResolveAssets(dependencies);
 	}
 

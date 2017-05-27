@@ -83,8 +83,4 @@ public class PackagesManager {
 		return invoke().getResourcesGroup(name);
 	}
 
-	public static DeployRemoteBanksTask prepareDeployRemoteBanksTask () {
-		return invoke().prepareDeployRemoteBanksTask();
-	}
-
 }

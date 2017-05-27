@@ -6,7 +6,6 @@ import java.io.IOException;
 import com.jfixby.rana.api.pkg.PackageSearchParameters;
 import com.jfixby.rana.api.pkg.PackageSearchResult;
 import com.jfixby.rana.api.pkg.Resource;
-import com.jfixby.rana.api.pkg.ResourceRebuildIndexListener;
 import com.jfixby.rana.api.pkg.ResourceSpecs;
 import com.jfixby.rana.api.pkg.io.BankIndex;
 import com.jfixby.rana.api.pkg.io.PackageDescriptor;
@@ -78,12 +77,12 @@ public class RedResource implements Resource {
 	}
 
 	@Override
-	public void rebuildIndex (final ResourceRebuildIndexListener listener) {
+	public void rebuildIndex () throws IOException {
 		L.d("rebuilding index", this.toString());
 		this.index.reset();
 // this.indexNeverTouched = false;
 		if (this.cache == null) {
-			this.rebuildIndexLocal(listener, this.bank_folder);
+			this.rebuildIndexLocal(this.bank_folder);
 			return;
 		}
 		try {
@@ -104,24 +103,22 @@ public class RedResource implements Resource {
 
 		} catch (final IOException e) {
 			e.printStackTrace();
-			this.rebuildIndexLocal(listener, this.cache);
-			listener.onError(e);
+			this.rebuildIndexLocal(this.cache);
+// listener.onError(e);
 			return;
 		}
 	}
 
-	private void rebuildIndexLocal (final ResourceRebuildIndexListener listener, final File folder) {
-		try {
-			final FilesList list = folder.listDirectChildren();
-			for (int i = 0; i < list.size(); i++) {
-				final File file_i = list.getElementAt(i);
-				if (file_i.isFolder()) {
-					this.try_to_index(file_i);
-				}
+	private void rebuildIndexLocal (final File folder) throws IOException {
+
+		final FilesList list = folder.listDirectChildren();
+		for (int i = 0; i < list.size(); i++) {
+			final File file_i = list.getElementAt(i);
+			if (file_i.isFolder()) {
+				this.try_to_index(file_i);
 			}
-		} catch (final IOException e) {
-			listener.onError(e);
 		}
+
 	}
 
 	public long reReadTimeStamp (final RedPackageHandler packageHandlerImpl) {

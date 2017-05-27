@@ -1,6 +1,8 @@
 
 package com.jfixby.rana.api.pkg;
 
+import java.io.IOException;
+
 import com.jfixby.scarabei.api.assets.ID;
 
 public interface ResourcesGroup {
@@ -11,6 +13,6 @@ public interface ResourcesGroup {
 
 	PackageSearchResult findPackages (PackageSearchParameters search_params);
 
-	void rebuildAllIndexes (ResourceRebuildIndexListener listener);
+	void rebuildAllIndexes () throws IOException;
 
 }

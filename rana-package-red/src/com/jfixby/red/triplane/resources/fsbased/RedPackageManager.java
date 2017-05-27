@@ -3,12 +3,10 @@ package com.jfixby.red.triplane.resources.fsbased;
 
 import java.io.IOException;
 
-import com.jfixby.rana.api.pkg.DeployRemoteBanksTask;
 import com.jfixby.rana.api.pkg.PackageSearchParameters;
 import com.jfixby.rana.api.pkg.PackageSearchResult;
 import com.jfixby.rana.api.pkg.PackagesManagerComponent;
 import com.jfixby.rana.api.pkg.Resource;
-import com.jfixby.rana.api.pkg.ResourceRebuildIndexListener;
 import com.jfixby.rana.api.pkg.ResourceSpecs;
 import com.jfixby.rana.api.pkg.ResourcesGroup;
 import com.jfixby.rana.api.pkg.io.BankHeaderInfo;
@@ -50,7 +48,6 @@ public class RedPackageManager implements PackagesManagerComponent {
 		this.deployed = false;
 		this.assets_folder = specs.assets_folder;
 		this.assets_cache_folder = specs.assets_cache_folder;
-		final ResourceRebuildIndexListener listener = specs.listener;
 		this.readResourcesConfigFile = specs.readResourcesConfigFile;
 		if (this.readResourcesConfigFile) {
 // final File resourcesConfigFile = LocalFileSystem.ApplicationHome().child(ResourcesConfigFile.FILE_NAME);
@@ -61,7 +58,7 @@ public class RedPackageManager implements PackagesManagerComponent {
 					final String java_path = folder.path;
 					final File dir = LocalFileSystem.newFile(java_path);
 					try {
-						final Collection<ResourcesGroup> locals = this.loadAssetsFolder(dir, listener);
+						final Collection<ResourcesGroup> locals = this.loadAssetsFolder(dir);
 					} catch (final IOException e) {
 						e.printStackTrace();
 					}
@@ -82,7 +79,7 @@ public class RedPackageManager implements PackagesManagerComponent {
 		}
 
 		try {
-			final Collection<ResourcesGroup> locals = this.loadAssetsFolder(this.assets_folder, listener);
+			final Collection<ResourcesGroup> locals = this.loadAssetsFolder(this.assets_folder);
 
 		} catch (final IOException e) {
 			e.printStackTrace();
@@ -248,14 +245,13 @@ public class RedPackageManager implements PackagesManagerComponent {
 		return bank;
 	}
 
-	Collection<ResourcesGroup> loadAssetsFolder (final File assets_folder, final ResourceRebuildIndexListener listener)
-		throws IOException {
+	Collection<ResourcesGroup> loadAssetsFolder (final File assets_folder) throws IOException {
 		Debug.checkNull("assets_folder", assets_folder);
 		if (assets_folder.exists() && assets_folder.isFolder()) {
 			final Collection<ResourcesGroup> locals = this.findAndInstallResources(assets_folder);
 // locals.print("locals");
 			for (final ResourcesGroup local : locals) {
-				local.rebuildAllIndexes(listener);
+				local.rebuildAllIndexes();
 			}
 			return locals;
 		}
@@ -267,12 +263,11 @@ public class RedPackageManager implements PackagesManagerComponent {
 		PackageManagerConfig config = null;
 		try {
 			final File resources_config_file = applicationHome.child(PackageManagerConfig.FILE_NAME);
-			
 
 			if (!resources_config_file.exists()) {
 				return null;
 			}
-			
+
 			L.d("reading", resources_config_file);
 
 			final String configString = resources_config_file.readToString();
@@ -286,10 +281,9 @@ public class RedPackageManager implements PackagesManagerComponent {
 
 	}
 
-	void loadRemoteBank (final HttpURL bankURL, final Iterable<String> tanks, final File assets_cache_folder,
-		final ResourceRebuildIndexListener listener) throws IOException {
+	void loadRemoteBank (final HttpURL bankURL, final Iterable<String> tanks, final File assets_cache_folder) throws IOException {
 		final ResourcesGroup bank = this.installRemoteBank(bankURL, assets_cache_folder, tanks);
-		bank.rebuildAllIndexes(listener);
+		bank.rebuildAllIndexes();
 	}
 
 // @Override
@@ -337,11 +331,6 @@ public class RedPackageManager implements PackagesManagerComponent {
 // res.rebuildIndex(listener);
 // }
 // }
-
-	@Override
-	public DeployRemoteBanksTask prepareDeployRemoteBanksTask () {
-		return new RedDeployRemoteBanksTask(this);
-	}
 
 // @Override
 // public Resource getResource (final String name) {
@@ -424,9 +413,5 @@ public class RedPackageManager implements PackagesManagerComponent {
 		return header;
 
 	}
-// }
-//
-
-//
 
 }

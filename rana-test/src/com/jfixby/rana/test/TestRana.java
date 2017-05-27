@@ -19,6 +19,7 @@ import com.jfixby.red.engine.core.resources.RedAssetsManager;
 import com.jfixby.red.engine.core.resources.RedLoadedAssets;
 import com.jfixby.red.triplane.resources.fsbased.RedPackageManager;
 import com.jfixby.red.triplane.resources.fsbased.RedResourcesManagerSpecs;
+import com.jfixby.scarabei.api.assets.Names;
 import com.jfixby.scarabei.api.collections.Collection;
 import com.jfixby.scarabei.api.desktop.ScarabeiDesktop;
 import com.jfixby.scarabei.api.file.File;
@@ -28,7 +29,7 @@ import com.jfixby.scarabei.gson.GoogleGson;
 
 public class TestRana {
 
-	public static void main (final String[] args) throws IOException {
+	public static void main (final String[] args) throws IOException, IOException {
 		ScarabeiDesktop.deploy();
 		final String java_path = "D:/[DATA]/[RED-ASSETS]/Art-Private/tinto-assets/assets/com.jfixby.tinto.assets";
 		final File bankFolder = LocalFileSystem.newFile(java_path);
@@ -47,7 +48,7 @@ public class TestRana {
 		LoadedAssets.installComponent(new RedLoadedAssets());
 		PackagesLoader.installComponent(new RedPackagesLoader());
 		AssetsManager.installComponent(new RedAssetsManager());
-
+		AssetsManager.autoResolveAsset(Names.newID("hello"));
 // PackagesManager.printAllIndexes();
 
 		final PackageFormat format = new PackageFormat("test");

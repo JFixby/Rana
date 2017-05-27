@@ -1,10 +1,11 @@
 
 package com.jfixby.red.triplane.resources.fsbased;
 
+import java.io.IOException;
+
 import com.jfixby.rana.api.pkg.PackageSearchParameters;
 import com.jfixby.rana.api.pkg.PackageSearchResult;
 import com.jfixby.rana.api.pkg.Resource;
-import com.jfixby.rana.api.pkg.ResourceRebuildIndexListener;
 import com.jfixby.rana.api.pkg.ResourcesGroup;
 import com.jfixby.scarabei.api.assets.ID;
 import com.jfixby.scarabei.api.collections.Collections;
@@ -51,11 +52,11 @@ public class RedBank implements ResourcesGroup {
 	}
 
 	@Override
-	public void rebuildAllIndexes (final ResourceRebuildIndexListener listener) {
+	public void rebuildAllIndexes () throws IOException {
 		for (int i = 0; i < this.resources.size(); i++) {
 			final Resource resouce = this.resources.getValueAt(i);
 // L.d("index of ", resouce);
-			resouce.rebuildIndex(listener);
+			resouce.rebuildIndex();
 		}
 	}
 
