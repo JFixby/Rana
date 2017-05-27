@@ -75,10 +75,10 @@ public class ResourceIndex {
 	public PackageSearchResult findPackages (final PackageSearchParameters search_params) {
 		final RedPackageSearchResult result = new RedPackageSearchResult(search_params);
 		Set<PackageHandler> handlers = null;
-		if (search_params.isGetAllAssetsFlagActive()) {
+		if (search_params.getAllFlag) {
 			handlers = this.getAllHandlers();
 		} else {
-			final ID asset_id = search_params.getAssetId();
+			final ID asset_id = search_params.asset_to_find;
 			handlers = this.filterHandlers(asset_id);
 		}
 
@@ -106,16 +106,16 @@ public class ResourceIndex {
 	}
 
 	private boolean handler_fits (final PackageHandler handler, final PackageSearchParameters search_params) {
-		if (search_params.isGetAllAssetsFlagActive()) {
+		if (search_params.getAllFlag) {
 			return true;
 		}
 
-		final List<PACKAGE_STATUS> acccepted_statuses = search_params.acceptPackageStatus();
+		final List<PACKAGE_STATUS> acccepted_statuses = search_params.acceptablePackageStatuses;
 
 		if (!acccepted_statuses.contains(handler.getStatus())) {
 			return false;
 		}
-		final ID asset_id = search_params.getAssetId();
+		final ID asset_id = search_params.asset_to_find;
 		final Collection<ID> descriptors = handler.listPackedAssets();
 		final boolean contains = descriptors.contains(asset_id);
 		if (!contains) {
@@ -126,7 +126,7 @@ public class ResourceIndex {
 	}
 
 	public void print () {
-		
+
 		this.handlers_by_asset_id.print("index");
 	}
 

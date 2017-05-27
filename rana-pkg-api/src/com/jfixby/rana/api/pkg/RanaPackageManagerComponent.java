@@ -10,21 +10,21 @@ import com.jfixby.scarabei.api.net.http.HttpURL;
 
 public interface RanaPackageManagerComponent {
 
-	PackageSearchParameters newSearchParameters ();
+// PackageSearchParameters newSearchParameters ();
 
 	PackageSearchResult findPackages (PackageSearchParameters search_params);
 
 	void printAllPackages ();
 
-	PackageFormat newPackageFormat (String format_name);
+// PackageFormat newPackageFormat (String format_name);
 
-	Collection<PackageReader> findPackageReaders (PackageFormat format);
+// Collection<PackageReader> findPackageReaders (PackageFormat format);
+//
+// void registerPackageReader (PackageReader loader);
 
-	void registerPackageReader (PackageReader loader);
+// Collection<PackageFormat> listAcceptablePackageFormats ();
 
-	Collection<PackageFormat> listAcceptablePackageFormats ();
-
-	void printInstalledPackageReaders ();
+// void printInstalledPackageReaders ();
 
 	ResourceSpecs newResourceSpecs ();
 

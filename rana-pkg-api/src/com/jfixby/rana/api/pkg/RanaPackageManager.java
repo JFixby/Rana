@@ -3,10 +3,8 @@ package com.jfixby.rana.api.pkg;
 
 import java.io.IOException;
 
-import com.jfixby.rana.api.asset.Asset;
 import com.jfixby.scarabei.api.ComponentInstaller;
 import com.jfixby.scarabei.api.assets.ID;
-import com.jfixby.scarabei.api.collections.Collection;
 
 public class RanaPackageManager {
 
@@ -29,10 +27,6 @@ public class RanaPackageManager {
 		return componentInstaller.getComponent();
 	}
 
-	public static PackageSearchParameters newSearchParameters () {
-		return invoke().newSearchParameters();
-	}
-
 	public static PackageSearchResult findPackages (final PackageSearchParameters search_params) {
 		return invoke().findPackages(search_params);
 	}
@@ -45,25 +39,25 @@ public class RanaPackageManager {
 		invoke().printAllPackages();
 	}
 
-	public static PackageFormat newPackageFormat (final String format_name) {
-		return invoke().newPackageFormat(format_name);
-	}
+// public static PackageFormat newPackageFormat (final String format_name) {
+// return invoke().newPackageFormat(format_name);
+// }
 
-	public static Collection<PackageReader> findPackageReaders (final PackageFormat format) {
-		return invoke().findPackageReaders(format);
-	}
+// public static Collection<PackageReader> findPackageReaders (final PackageFormat format) {
+// return invoke().findPackageReaders(format);
+// }
+//
+// public static void registerPackageReader (final PackageReader loader) {
+// invoke().registerPackageReader(loader);
+// }
 
-	public static <T extends Asset> void registerPackageReader (final PackageReader loader) {
-		invoke().registerPackageReader(loader);
-	}
+// public static Collection<PackageFormat> listAcceptablePackageFormats () {
+// return invoke().listAcceptablePackageFormats();
+// }
 
-	public static Collection<PackageFormat> listAcceptablePackageFormats () {
-		return invoke().listAcceptablePackageFormats();
-	}
-
-	public static void printAllPackageReaders () {
-		invoke().printInstalledPackageReaders();
-	}
+// public static void printAllPackageReaders () {
+// invoke().printInstalledPackageReaders();
+// }
 
 	public static ResourceSpecs newResourceSpecs () {
 		return invoke().newResourceSpecs();

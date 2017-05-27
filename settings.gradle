@@ -1,7 +1,9 @@
 include 'rana-api'
 include 'rana-pkg-api'
 include 'rana-pkg-red'
-include 'rana-res-api'
-include 'rana-res-red'
+include 'rana-loader-api'
+include 'rana-loader-red'
+include 'rana-asset-api'
+include 'rana-asset-red'
 include 'rana-test'
 

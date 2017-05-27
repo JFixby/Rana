@@ -3,12 +3,10 @@ package com.jfixby.red.triplane.resources.fsbased;
 
 import java.io.IOException;
 
-import com.jfixby.rana.api.asset.AssetsManager;
-import com.jfixby.rana.api.asset.SealedAssetsContainer;
+import com.jfixby.rana.api.format.PackageFormat;
 import com.jfixby.rana.api.pkg.PACKAGE_STATUS;
 import com.jfixby.rana.api.pkg.PackageHandler;
-import com.jfixby.rana.api.pkg.PackageReader;
-import com.jfixby.rana.api.pkg.PackageReaderListener;
+import com.jfixby.rana.api.pkg.PackageInstallerListener;
 import com.jfixby.rana.api.pkg.PackageVersion;
 import com.jfixby.rana.api.pkg.fs.PackageDescriptor;
 import com.jfixby.scarabei.api.assets.ID;
@@ -21,7 +19,6 @@ import com.jfixby.scarabei.api.file.FileConflistResolver;
 import com.jfixby.scarabei.api.file.FileSystem;
 import com.jfixby.scarabei.api.file.FileSystemSandBox;
 import com.jfixby.scarabei.api.log.L;
-import com.jfixby.scarabei.api.sys.settings.SystemSettings;
 import com.jfixby.scarabei.api.util.JUtils;
 import com.jfixby.scarabei.api.util.StateSwitcher;
 
@@ -31,8 +28,8 @@ public class RedPackageHandler implements PackageHandler, PackageVersion {
 	final List<ID> descriptors = Collections.newList();
 
 	// private File root_file;
-	private PackageFormatImpl format;
-	boolean isLoaded = false;
+	private PackageFormat format;
+// boolean isLoaded = false;
 	private final String name;
 
 	private final File package_cache;
@@ -64,58 +61,58 @@ public class RedPackageHandler implements PackageHandler, PackageVersion {
 		this.name = package_folder.getName();
 	}
 
+// @Override
+// public SealedAssetsContainer doReadPackage (final PackageReaderListener reader_listener, final PackageReader reader) {
+// this.status.expectState(PACKAGE_STATUS.INSTALLED);
+//
+// File read_folder = null;
+// if (this.package_cache == null) {
+// read_folder = this.package_folder.child(PackageDescriptor.PACKAGE_CONTENT_FOLDER);
+// } else {
+// read_folder = this.package_cache.child(PackageDescriptor.PACKAGE_CONTENT_FOLDER);
+// }
+//
+// FileSystem FS = read_folder.getFileSystem();
+//
+// File sandbox_folder = null;
+// final boolean use_sandbox = SystemSettings.getFlag(RanaPackageManager.UseAssetSandBox);
+// if (FS.isReadOnlyFileSystem() || !use_sandbox) {
+// sandbox_folder = read_folder;
+// } else {
+// try {
+// sandbox_folder = FileSystemSandBox.wrap(this.name, read_folder).ROOT();
+// } catch (final IOException e) {
+// this.status.switchState(PACKAGE_STATUS.BROKEN);
+// reader_listener.onError(e);
+// return null;
+// }
+// FS = sandbox_folder.getFileSystem();
+// }
+//
+// final File root_file = sandbox_folder.child(this.root_file_name);
+//
+// try {
+// final RedSealedContainer packageData = new RedSealedContainer(this, reader_listener, reader);
+// final PackageInputImpl input = new PackageInputImpl(reader_listener, root_file, packageData, this);
+//// L.d("reading", root_file);
+// reader.doReadPackage(input);
+// packageData.seal();
+// this.isLoaded = true;
+// return packageData;
+// } catch (final IOException e) {
+// this.status.switchState(PACKAGE_STATUS.BROKEN);
+// reader_listener.onError(e);
+// return null;
+// }
+//
+// }
+//
+// public void flagUnload () {
+// this.isLoaded = false;
+// }
+
 	@Override
-	public SealedAssetsContainer doReadPackage (final PackageReaderListener reader_listener, final PackageReader reader) {
-		this.status.expectState(PACKAGE_STATUS.INSTALLED);
-
-		File read_folder = null;
-		if (this.package_cache == null) {
-			read_folder = this.package_folder.child(PackageDescriptor.PACKAGE_CONTENT_FOLDER);
-		} else {
-			read_folder = this.package_cache.child(PackageDescriptor.PACKAGE_CONTENT_FOLDER);
-		}
-
-		FileSystem FS = read_folder.getFileSystem();
-
-		File sandbox_folder = null;
-		final boolean use_sandbox = SystemSettings.getFlag(AssetsManager.UseAssetSandBox);
-		if (FS.isReadOnlyFileSystem() || !use_sandbox) {
-			sandbox_folder = read_folder;
-		} else {
-			try {
-				sandbox_folder = FileSystemSandBox.wrap(this.name, read_folder).ROOT();
-			} catch (final IOException e) {
-				this.status.switchState(PACKAGE_STATUS.BROKEN);
-				reader_listener.onError(e);
-				return null;
-			}
-			FS = sandbox_folder.getFileSystem();
-		}
-
-		final File root_file = sandbox_folder.child(this.root_file_name);
-
-		try {
-			final RedSealedContainer packageData = new RedSealedContainer(this, reader_listener, reader);
-			final PackageInputImpl input = new PackageInputImpl(reader_listener, root_file, packageData, this);
-// L.d("reading", root_file);
-			reader.doReadPackage(input);
-			packageData.seal();
-			this.isLoaded = true;
-			return packageData;
-		} catch (final IOException e) {
-			this.status.switchState(PACKAGE_STATUS.BROKEN);
-			reader_listener.onError(e);
-			return null;
-		}
-
-	}
-
-	public void flagUnload () {
-		this.isLoaded = false;
-	}
-
-	@Override
-	public PackageFormatImpl getFormat () {
+	public PackageFormat getFormat () {
 		return this.format;
 	}
 
@@ -149,7 +146,7 @@ public class RedPackageHandler implements PackageHandler, PackageVersion {
 	}
 
 	@Override
-	public void install (final PackageReaderListener reader_listener) {
+	public void install (final PackageInstallerListener reader_listener) {
 		this.status.expectState(PACKAGE_STATUS.NOT_INSTALLED);
 // L.d("install ?", this);
 		final FileSystem fs = this.package_folder.getFileSystem();
@@ -168,10 +165,10 @@ public class RedPackageHandler implements PackageHandler, PackageVersion {
 
 	}
 
-	@Override
-	public boolean isLoaded () {
-		return this.isLoaded;
-	}
+// @Override
+// public boolean isLoaded () {
+// return this.isLoaded;
+// }
 
 	@Override
 	public Collection<ID> listDependencies () {
@@ -196,7 +193,7 @@ public class RedPackageHandler implements PackageHandler, PackageVersion {
 	public void setFormat (final String format_string) {
 		Debug.checkNull("format", format_string);
 		Debug.checkEmpty("format", format_string);
-		this.format = new PackageFormatImpl(format_string);
+		this.format = new PackageFormat(format_string);
 	}
 
 	public void setRootFileName (final String root_file_name) {
@@ -216,6 +213,35 @@ public class RedPackageHandler implements PackageHandler, PackageVersion {
 	@Override
 	public String toString () {
 		return "PackageHandler[" + this.format + "] ver." + this.version + " " + this.descriptors + " timestamp=" + this.timestamp;
+	}
+
+	@Override
+	public File getRootFile (final boolean use_sandbox) throws IOException {
+		this.status.expectState(PACKAGE_STATUS.INSTALLED);
+
+		File read_folder = null;
+		if (this.package_cache == null) {
+			read_folder = this.package_folder.child(PackageDescriptor.PACKAGE_CONTENT_FOLDER);
+		} else {
+			read_folder = this.package_cache.child(PackageDescriptor.PACKAGE_CONTENT_FOLDER);
+		}
+
+		FileSystem FS = read_folder.getFileSystem();
+
+		File sandbox_folder = null;
+		if (FS.isReadOnlyFileSystem() || !use_sandbox) {
+			sandbox_folder = read_folder;
+		} else {
+
+			sandbox_folder = FileSystemSandBox.wrap(this.name, read_folder).ROOT();
+
+			FS = sandbox_folder.getFileSystem();
+		}
+
+		final File root_file = sandbox_folder.child(this.root_file_name);
+
+		return root_file;
+
 	}
 
 }

@@ -1,22 +1,29 @@
+
 package com.jfixby.rana.api.pkg;
 
+import com.jfixby.rana.api.format.PackageFormat;
 import com.jfixby.scarabei.api.assets.ID;
+import com.jfixby.scarabei.api.collections.Collections;
 import com.jfixby.scarabei.api.collections.List;
+import com.jfixby.scarabei.api.log.L;
 
-public interface PackageSearchParameters {
+public class PackageSearchParameters {
 
-	void setAssetId(ID asset_to_find);
+	public final List<PackageFormat> acceptablePackageFormats = Collections.newList();
+	public final List<PACKAGE_STATUS> acceptablePackageStatuses = Collections.newList(PACKAGE_STATUS.INSTALLED,
+		PACKAGE_STATUS.NOT_INSTALLED);
 
-	ID getAssetId();
+	public ID asset_to_find;
+	public boolean getAllFlag = false;
 
-//	List<PackageFormat> acceptPackageFormat();
+	public void print () {
+		L.d(this.toString());
+	}
 
-	List<PACKAGE_STATUS> acceptPackageStatus();
-
-	void print();
-
-	void setGetAllAssetsFlag(boolean b);
-
-	boolean isGetAllAssetsFlagActive();
+	@Override
+	public String toString () {
+		return "PackageSearchParameters: acceptablePackageFormats=" + this.acceptablePackageFormats + ", acceptablePackageStatuses="
+			+ this.acceptablePackageStatuses + ", asset_to_find=<" + this.asset_to_find + ">";
+	}
 
 }

@@ -7,8 +7,6 @@ import com.jfixby.rana.api.cfg.AssetsFolder;
 import com.jfixby.rana.api.cfg.RemoteAssetsFolder;
 import com.jfixby.rana.api.cfg.ResourcesConfigFile;
 import com.jfixby.rana.api.pkg.DeployRemoteBanksTask;
-import com.jfixby.rana.api.pkg.PackageFormat;
-import com.jfixby.rana.api.pkg.PackageReader;
 import com.jfixby.rana.api.pkg.PackageSearchParameters;
 import com.jfixby.rana.api.pkg.PackageSearchResult;
 import com.jfixby.rana.api.pkg.RanaPackageManagerComponent;
@@ -42,9 +40,6 @@ public class RedPackageManager implements RanaPackageManagerComponent {
 	private final File assets_cache_folder;
 	private final File assets_folder;
 	boolean deployed = false;
-	final List<PackageReader> loaders = Collections.newList();
-
-	final Map<PackageFormat, List<PackageReader>> loaders_by_format = Collections.newMap();
 
 	private final List<RemoteBankSettings> remoteBanksToDepoloy = Collections.newList();
 
@@ -172,17 +167,6 @@ public class RedPackageManager implements RanaPackageManagerComponent {
 	}
 
 	@Override
-	public Collection<PackageReader> findPackageReaders (final PackageFormat format) {
-		final List<PackageReader> list = this.loaders_by_format.get(format);
-		if (list == null) {
-			// L.d("format", format);
-			// loaders_by_format.print("acceptable formats");
-			return Collections.newList();
-		}
-		return list;
-	}
-
-	@Override
 	public PackageSearchResult findPackages (final PackageSearchParameters search_params) {
 		final RedPackageSearchResult result = new RedPackageSearchResult(search_params);
 		Debug.checkNull("search_params", search_params);
@@ -264,11 +248,6 @@ public class RedPackageManager implements RanaPackageManagerComponent {
 		return bank;
 	}
 
-	@Override
-	public Collection<PackageFormat> listAcceptablePackageFormats () {
-		return this.loaders_by_format.keys();
-	}
-
 	Collection<ResourcesGroup> loadAssetsFolder (final File assets_folder, final ResourceRebuildIndexListener listener)
 		throws IOException {
 		Debug.checkNull("assets_folder", assets_folder);
@@ -311,10 +290,10 @@ public class RedPackageManager implements RanaPackageManagerComponent {
 		bank.rebuildAllIndexes(listener);
 	}
 
-	@Override
-	public PackageFormat newPackageFormat (final String format_name) {
-		return new PackageFormatImpl(format_name);
-	}
+// @Override
+// public PackageFormat newPackageFormat (final String format_name) {
+// return new PackageFormatImpl(format_name);
+// }
 
 	@Override
 	public Resource newResource (final ResourceSpecs resSpec) throws IOException {
@@ -347,11 +326,6 @@ public class RedPackageManager implements RanaPackageManagerComponent {
 	// LocalFileSystem.newFile(TintoAssetsConfig.PACKED_ASSETS_HOME);
 // final File dev_assets_home = LocalFileSystem.newFile(TintoAssetsConfig.PACKED_ASSETS_HOME);
 
-	@Override
-	public PackageSearchParameters newSearchParameters () {
-		return new RedPackageSearchParameters();
-	}
-
 // @Override
 // public void updateAll (ResourceRebuildIndexListener listener) {
 // if (listener == null) {
@@ -382,8 +356,8 @@ public class RedPackageManager implements RanaPackageManagerComponent {
 	@Override
 	public void printAllPackages () {
 		this.resources.print("All installed resources");
-		final PackageSearchParameters search_params = this.newSearchParameters();
-		search_params.setGetAllAssetsFlag(true);
+		final PackageSearchParameters search_params = new PackageSearchParameters();
+		search_params.getAllFlag = true;
 		final PackageSearchResult packages = this.findPackages(search_params);
 		packages.list().print("All available packages");
 		;
@@ -392,33 +366,6 @@ public class RedPackageManager implements RanaPackageManagerComponent {
 	@Override
 	public void printAllResources () {
 		this.resources.print("resources");
-	}
-
-	@Override
-	public void printInstalledPackageReaders () {
-		this.loaders_by_format.print("Installed package readers");
-	}
-
-	@Override
-	public void registerPackageReader (final PackageReader loader) {
-		if (this.loaders.contains(loader)) {
-			L.d("Loader is already registred:" + loader);
-			return;
-		}
-
-		final Collection<PackageFormat> can_read = loader.listAcceptablePackageFormats();
-		Debug.checkNull("PackageReader.listAcceptablePackageFormats()", can_read);
-		this.loaders.add(loader);
-		for (int i = 0; i < can_read.size(); i++) {
-			final PackageFormat format = can_read.getElementAt(i);
-			List<PackageReader> loaders_list = this.loaders_by_format.get(format);
-			if (loaders_list == null) {
-				loaders_list = Collections.newList();
-				this.loaders_by_format.put(format, loaders_list);
-			}
-			loaders_list.add(loader);
-		}
-
 	}
 
 	private ResourcesConfigFile tryToMakeConfigFile (final File applicationHome) {

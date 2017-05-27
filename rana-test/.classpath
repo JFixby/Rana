@@ -38,7 +38,9 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/Rana"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/rana-pkg-api"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/rana-pkg-red"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/rana-res-api"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/rana-res-red"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/rana-asset-api"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/rana-asset-red"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/rana-loader-api"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/rana-loader-red"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

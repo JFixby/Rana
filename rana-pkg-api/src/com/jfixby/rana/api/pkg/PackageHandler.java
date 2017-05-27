@@ -1,9 +1,12 @@
 
 package com.jfixby.rana.api.pkg;
 
-import com.jfixby.rana.api.asset.SealedAssetsContainer;
+import java.io.IOException;
+
+import com.jfixby.rana.api.format.PackageFormat;
 import com.jfixby.scarabei.api.assets.ID;
 import com.jfixby.scarabei.api.collections.Collection;
+import com.jfixby.scarabei.api.file.File;
 
 public interface PackageHandler {
 
@@ -21,10 +24,8 @@ public interface PackageHandler {
 
 	public void print ();
 
-	public void install (PackageReaderListener reader_listener);
+	public void install (PackageInstallerListener reader_listener);
 
-	public SealedAssetsContainer doReadPackage (PackageReaderListener reader_listener, PackageReader reader);
-
-	public boolean isLoaded ();
+	public File getRootFile (boolean sandBoxMode) throws IOException;
 
 }
