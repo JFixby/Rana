@@ -3,12 +3,15 @@ package com.jfixby.rana.test;
 
 import java.io.IOException;
 
+import com.jfixby.rana.api.asset.AssetsManager;
+import com.jfixby.rana.api.asset.SealedAssetsContainer;
 import com.jfixby.rana.api.format.PackageFormat;
 import com.jfixby.rana.api.format.StandardPackageFormats;
 import com.jfixby.rana.api.pkg.PackageHandler;
 import com.jfixby.rana.api.pkg.PackageSearchParameters;
 import com.jfixby.rana.api.pkg.PackageSearchResult;
 import com.jfixby.rana.api.pkg.RanaPackageManager;
+import com.jfixby.red.engine.core.resources.RedAssetsManager;
 import com.jfixby.red.triplane.resources.fsbased.RedPackageManager;
 import com.jfixby.red.triplane.resources.fsbased.RedResourcesManagerSpecs;
 import com.jfixby.scarabei.api.desktop.ScarabeiDesktop;
@@ -48,6 +51,10 @@ public class TestRana {
 		final PackageHandler packagebest = resiult.getBest();
 		L.d();
 		packagebest.print();
+
+		AssetsManager.installComponent(new RedAssetsManager());
+		final SealedAssetsContainer container = null;
+		AssetsManager.invoke().registerAssetsContainer(container);
 
 	}
 
