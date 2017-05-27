@@ -126,7 +126,7 @@ public class RedResource implements Resource {
 
 	public long reReadTimeStamp (final RedPackageHandler packageHandlerImpl) {
 		final File package_folder = packageHandlerImpl.getPackageFolder();
-		final File file = package_folder.child(PackageDescriptor.PACKAGE_DESCRIPTOR_FILE_NAME);
+		final File file = package_folder.child(PackageDescriptor.PACKAGE_DESCRIPTOR_FILE_NAME + ".json");
 		try {
 			L.d("re-reading", file);
 			final PackageDescriptor descriptor = file.readData(PackageDescriptor.class);
@@ -152,7 +152,7 @@ public class RedResource implements Resource {
 
 	private void try_to_index (final File package_folder) {
 		final FileSystem FS = package_folder.getFileSystem();
-		final File json_file = package_folder.child(PackageDescriptor.PACKAGE_DESCRIPTOR_FILE_NAME);
+		final File json_file = package_folder.child(PackageDescriptor.PACKAGE_DESCRIPTOR_FILE_NAME + ".json");
 // try {
 // final PackageDescriptor descriptor = file.readData(PackageDescriptor.class);
 // this.index(descriptor, package_folder);
