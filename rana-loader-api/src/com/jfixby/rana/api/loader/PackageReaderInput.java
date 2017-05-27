@@ -10,4 +10,6 @@ public class PackageReaderInput {
 
 	public AssetsContainer assetsContainer;
 
+	public PackageInfo packageInfo;
+
 }
