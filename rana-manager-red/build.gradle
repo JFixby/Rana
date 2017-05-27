@@ -1,3 +1,6 @@
 dependencies {
     compile project(":rana-manager-api")
+    compile project(":rana-asset-api")
+    compile project(":rana-package-api")
+    compile project(":rana-loader-api")
 }

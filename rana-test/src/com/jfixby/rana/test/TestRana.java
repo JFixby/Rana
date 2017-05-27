@@ -3,6 +3,7 @@ package com.jfixby.rana.test;
 
 import java.io.IOException;
 
+import com.jfixby.rana.api.asset.AssetsManager;
 import com.jfixby.rana.api.asset.LoadedAssets;
 import com.jfixby.rana.api.asset.SealedAssetsContainer;
 import com.jfixby.rana.api.format.PackageFormat;
@@ -14,6 +15,7 @@ import com.jfixby.rana.api.pkg.PackageSearchParameters;
 import com.jfixby.rana.api.pkg.PackageSearchResult;
 import com.jfixby.rana.api.pkg.PackagesManager;
 import com.jfixby.rana.red.loader.RedPackagesLoader;
+import com.jfixby.red.engine.core.resources.RedAssetsManager;
 import com.jfixby.red.engine.core.resources.RedLoadedAssets;
 import com.jfixby.red.triplane.resources.fsbased.RedPackageManager;
 import com.jfixby.red.triplane.resources.fsbased.RedResourcesManagerSpecs;
@@ -44,6 +46,7 @@ public class TestRana {
 		PackagesManager.installComponent(resman);
 		LoadedAssets.installComponent(new RedLoadedAssets());
 		PackagesLoader.installComponent(new RedPackagesLoader());
+		AssetsManager.installComponent(new RedAssetsManager());
 
 // PackagesManager.printAllIndexes();
 

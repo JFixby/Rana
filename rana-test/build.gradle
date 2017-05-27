@@ -10,6 +10,9 @@ dependencies {
              compile project(":rana-asset-api")
              compile project(":rana-asset-red")
              
+             compile project(":rana-manager-api")
+             compile project(":rana-manager-red")
+             
 	         compile project(":rana-loader-api")
 	         compile project(":rana-loader-red")
 	         

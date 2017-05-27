@@ -6,7 +6,6 @@ import java.io.IOException;
 import com.jfixby.rana.api.format.PackageFormat;
 import com.jfixby.rana.api.pkg.PACKAGE_STATUS;
 import com.jfixby.rana.api.pkg.PackageHandler;
-import com.jfixby.rana.api.pkg.PackageInstallerListener;
 import com.jfixby.rana.api.pkg.PackageVersion;
 import com.jfixby.rana.api.pkg.io.PackageDescriptor;
 import com.jfixby.scarabei.api.assets.ID;
@@ -146,22 +145,16 @@ public class RedPackageHandler implements PackageHandler, PackageVersion {
 	}
 
 	@Override
-	public void install (final PackageInstallerListener reader_listener) {
+	public void install () throws IOException {
 		this.status.expectState(PACKAGE_STATUS.NOT_INSTALLED);
 // L.d("install ?", this);
 		final FileSystem fs = this.package_folder.getFileSystem();
-		try {
-			fs.copyFolderContentsToFolder(this.package_folder, this.package_cache, FileConflistResolver.OVERWRITE_IF_NEW);
+
+		fs.copyFolderContentsToFolder(this.package_folder, this.package_cache, FileConflistResolver.OVERWRITE_IF_NEW);
 // if (1 == 1) {
 // throw new IOException("Failed to install");
 // }
-			this.status.switchState(PACKAGE_STATUS.INSTALLED);
-
-		} catch (final IOException e) {
-			reader_listener.onFailedToInstall(e);
-// this.status.switchState(PACKAGE_STATUS.BROKEN);
-// Err.reportError(e);
-		}
+		this.status.switchState(PACKAGE_STATUS.INSTALLED);
 
 	}
 

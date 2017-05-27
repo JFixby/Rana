@@ -24,7 +24,7 @@ public interface PackageHandler {
 
 	public void print ();
 
-	public void install (PackageInstallerListener reader_listener);
+	public void install () throws IOException;
 
 	public File getRootFile (boolean sandBoxMode) throws IOException;
 
