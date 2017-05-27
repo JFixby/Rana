@@ -12,4 +12,6 @@ public interface AssetsManagerComponent {
 
 	void autoResolveAssets (Collection<ID> dependencies) throws IOException;
 
+	AssetsPurgeResult purge ();
+
 }

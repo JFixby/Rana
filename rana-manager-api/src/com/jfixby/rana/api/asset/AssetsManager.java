@@ -38,4 +38,8 @@ public class AssetsManager {
 		invoke().autoResolveAssets(dependencies);
 	}
 
+	public static AssetsPurgeResult purge () {
+		return invoke().purge();
+	}
+
 }

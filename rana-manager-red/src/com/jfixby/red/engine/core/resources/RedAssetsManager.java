@@ -6,7 +6,9 @@ import java.io.IOException;
 import com.jfixby.rana.api.asset.AssetHandler;
 import com.jfixby.rana.api.asset.AssetsConsumer;
 import com.jfixby.rana.api.asset.AssetsManagerComponent;
+import com.jfixby.rana.api.asset.AssetsPurgeResult;
 import com.jfixby.rana.api.asset.LoadedAssets;
+import com.jfixby.rana.api.asset.SealedAssetsContainer;
 import com.jfixby.rana.api.format.PackageFormat;
 import com.jfixby.rana.api.loader.PackageReader;
 import com.jfixby.rana.api.loader.PackageReaderInput;
@@ -136,6 +138,24 @@ public class RedAssetsManager implements AssetsManagerComponent {
 				throw new IOException("Failed to resolve asset[" + dependency + "]", e);
 			}
 		}
+	}
+
+	final ContainersRegistry conrtainersReg = new ContainersRegistry();
+
+	@Override
+	public AssetsPurgeResult purge () {
+		final RedAssetsPurgeResult result = new RedAssetsPurgeResult();
+		final Collection<SealedAssetsContainer> unused = LoadedAssets.listUnusedContainers();
+		for (final SealedAssetsContainer c : unused) {
+			final ContainerOwner owner = this.conrtainersReg.getContainerOwner(c);
+			owner.onAssetsUnload(c);
+			if (!this.conrtainersReg.hasMoreContainers(owner)) {
+				this.conrtainersReg.unregister(owner);
+				result.addOwner(owner);
+			}
+		}
+		LoadedAssets.unRegisterAssetsContainers(unused);
+		return result;
 	}
 
 }

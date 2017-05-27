@@ -4,6 +4,7 @@ package com.jfixby.rana.test;
 import java.io.IOException;
 
 import com.jfixby.rana.api.asset.AssetsManager;
+import com.jfixby.rana.api.asset.AssetsPurgeResult;
 import com.jfixby.rana.api.asset.LoadedAssets;
 import com.jfixby.rana.api.asset.SealedAssetsContainer;
 import com.jfixby.rana.api.format.PackageFormat;
@@ -49,6 +50,8 @@ public class TestRana {
 		PackagesLoader.installComponent(new RedPackagesLoader());
 		AssetsManager.installComponent(new RedAssetsManager());
 		AssetsManager.autoResolveAsset(Names.newID("com.jfixby.tinto.preloader.psd.raster_0"));
+		final AssetsPurgeResult purge = AssetsManager.purge();
+		purge.print();
 // PackagesManager.printAllIndexes();
 
 		final PackageFormat format = new PackageFormat("test");
