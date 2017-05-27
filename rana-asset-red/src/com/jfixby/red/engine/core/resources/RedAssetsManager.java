@@ -3,6 +3,7 @@ package com.jfixby.red.engine.core.resources;
 
 import com.jfixby.rana.api.asset.AssetHandler;
 import com.jfixby.rana.api.asset.AssetsConsumer;
+import com.jfixby.rana.api.asset.AssetsContainer;
 import com.jfixby.rana.api.asset.AssetsManagerComponent;
 import com.jfixby.rana.api.asset.SealedAssetsContainer;
 import com.jfixby.scarabei.api.assets.ID;
@@ -329,29 +330,16 @@ public class RedAssetsManager implements AssetsManagerComponent {
 		return unusedContainers;
 	}
 
-// @Override
-// public void purge () {
-//
-//// this.asset_users.print("asset_users");
-//
-//// this.asset_users.print("before remove");
-// this.asset_users.removeAll(keys);
-//// this.asset_users.print("after remove");
-//
-//// keys.print("assetsToDrop");
-//// this.asset_users.print("asset_users");
-//
-// this.purgeAssets(keys);
-//
-//// Sys.exit();
-//
-// }
-
 	@Override
 	public void unRegisterAssetsContainers (final Collection<SealedAssetsContainer> containers) {
 		for (final SealedAssetsContainer c : containers) {
 			this.unRegisterAssetsContainer(c);
 		}
+	}
+
+	@Override
+	public AssetsContainer newAssetsContainer () {
+		return new RedAssetsContainer();
 	}
 
 }

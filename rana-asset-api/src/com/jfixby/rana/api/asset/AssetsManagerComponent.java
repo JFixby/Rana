@@ -30,4 +30,6 @@ public interface AssetsManagerComponent {
 
 	void unRegisterAssetsContainers (Collection<SealedAssetsContainer> containers);
 
+	AssetsContainer newAssetsContainer ();
+
 }

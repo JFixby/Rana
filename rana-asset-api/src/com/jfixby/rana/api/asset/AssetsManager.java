@@ -58,4 +58,8 @@ public class AssetsManager {
 		return invoke().listUnusedContainers();
 	}
 
+	public static AssetsContainer newAssetsContainer () {
+		return invoke().newAssetsContainer();
+	}
+
 }

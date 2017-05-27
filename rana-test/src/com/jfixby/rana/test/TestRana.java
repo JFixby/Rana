@@ -54,7 +54,7 @@ public class TestRana {
 
 		AssetsManager.installComponent(new RedAssetsManager());
 		final SealedAssetsContainer container = null;
-		AssetsManager.invoke().registerAssetsContainer(container);
+		AssetsManager.registerAssetsContainer(container);
 
 	}
 
