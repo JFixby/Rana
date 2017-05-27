@@ -1,4 +1,4 @@
 dependencies {
     compile project(":rana-api")
-    compile project(":rana-asset-api")
+    //compile project(":rana-asset-api")
 }

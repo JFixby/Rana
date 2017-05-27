@@ -7,6 +7,6 @@ public interface Asset {
 
 	public ID getAssetID ();
 
-	public AssetsGroup getGroup ();
+// public AssetsGroup getGroup ();
 
 }
