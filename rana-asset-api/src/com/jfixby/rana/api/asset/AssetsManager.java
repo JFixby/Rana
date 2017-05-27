@@ -7,8 +7,6 @@ import com.jfixby.scarabei.api.collections.Collection;
 
 public class AssetsManager {
 
-	public static final String ReportUnusedAssets = "ReportUnusedAssets";
-
 	static private ComponentInstaller<AssetsManagerComponent> componentInstaller = new ComponentInstaller<AssetsManagerComponent>(
 		"AssetsManager");
 

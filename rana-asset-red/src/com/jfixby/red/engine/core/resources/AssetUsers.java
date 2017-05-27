@@ -1,7 +1,7 @@
 
 package com.jfixby.red.engine.core.resources;
 
-import com.jfixby.rana.api.asset.AssetsManager;
+import com.jfixby.rana.api.asset.AssetsManagerFlags;
 import com.jfixby.scarabei.api.assets.ID;
 import com.jfixby.scarabei.api.collections.Collections;
 import com.jfixby.scarabei.api.collections.List;
@@ -50,7 +50,7 @@ public class AssetUsers {
 		}
 		users.remove(user);
 		if (users.size() == 0) {
-			final boolean reportUnused = SystemSettings.getFlag(AssetsManager.ReportUnusedAssets);
+			final boolean reportUnused = SystemSettings.getFlag(AssetsManagerFlags.ReportUnusedAssets);
 			if (reportUnused) {
 				L.e("Unused asset", asset_id);
 			}
