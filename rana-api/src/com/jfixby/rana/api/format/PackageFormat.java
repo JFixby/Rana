@@ -3,10 +3,10 @@ package com.jfixby.rana.api.format;
 
 public class PackageFormat {
 
-	public String format_string;
+	final public String format_string;
 
-	public PackageFormat () {
-	}
+// public PackageFormat () {
+// }
 
 	public PackageFormat (final String format_string) {
 		this.format_string = format_string;

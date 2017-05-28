@@ -83,4 +83,8 @@ public class PackagesManager {
 		return invoke().getBank(name);
 	}
 
+	public static DeployRemoteBanksTask prepareDeployRemoteBanksTask () {
+		return invoke().prepareDeployRemoteBanksTask();
+	}
+
 }

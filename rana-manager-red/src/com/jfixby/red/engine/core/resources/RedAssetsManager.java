@@ -107,11 +107,14 @@ public class RedAssetsManager implements AssetsManagerComponent {
 		final AssetsContainer container = LoadedAssets.newAssetsContainer();
 		readArgs.assetsContainer = container;
 		readArgs.packageInfo.packageName = package_handler.getPackageName();
+		readArgs.packageInfo.packageFormat = package_handler.getFormat();
+		readArgs.packageInfo.packedAssets = package_handler.listPackedAssets();
+		readArgs.packageInfo.dependencies = package_handler.listDependencies();
 		package_reader.doReadPackage(readArgs);
 		container.printAll();
 		LoadedAssets.registerAssetsContainer(container.seal());
-		this.conrtainersReg.registerContainer(container);
-		L.d("MISSING OWNER!");
+		this.conrtainersReg.registerContainer(container.seal());
+// L.d("MISSING OWNER!");
 // package_handler.doReadPackage(listener, package_reader);
 // debigTimer.printTimeAbove(50L, "LOAD-TIME: Asset[" + dependency + "] loaded");
 
@@ -153,9 +156,10 @@ public class RedAssetsManager implements AssetsManagerComponent {
 		final RedAssetsPurgeResult result = new RedAssetsPurgeResult();
 		final Collection<SealedAssetsContainer> unused = LoadedAssets.listUnusedContainers();
 		for (final SealedAssetsContainer c : unused) {
-			final ContainerOwner owner = this.conrtainersReg.getContainerOwner(c);
+			final AssetsContainerOwner owner = this.conrtainersReg.getContainerOwner(c);
 			Debug.checkNull("Owner of " + c + " not found", owner);
 			owner.onAssetsUnload(c);
+			this.conrtainersReg.unregisterContainer(c);
 			if (!this.conrtainersReg.hasMoreContainers(owner)) {
 				this.conrtainersReg.unregister(owner);
 				result.addOwner(owner);

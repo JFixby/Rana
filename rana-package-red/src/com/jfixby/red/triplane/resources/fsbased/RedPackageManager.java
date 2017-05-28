@@ -4,6 +4,7 @@ package com.jfixby.red.triplane.resources.fsbased;
 import java.io.IOException;
 
 import com.jfixby.rana.api.pkg.AssetsTankSpecs;
+import com.jfixby.rana.api.pkg.DeployRemoteBanksTask;
 import com.jfixby.rana.api.pkg.PackageSearchParameters;
 import com.jfixby.rana.api.pkg.PackageSearchResult;
 import com.jfixby.rana.api.pkg.PackagesBank;
@@ -413,6 +414,11 @@ public class RedPackageManager implements PackagesManagerComponent {
 		final BankHeader header = new BankHeader(headerInfo, bank_folder);
 		return header;
 
+	}
+
+	@Override
+	public DeployRemoteBanksTask prepareDeployRemoteBanksTask () {
+		return new RedDeployRemoteBanksTask(this);
 	}
 
 }
