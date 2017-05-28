@@ -3,12 +3,12 @@ package com.jfixby.red.triplane.resources.fsbased;
 
 import java.io.IOException;
 
+import com.jfixby.rana.api.pkg.AssetsTankSpecs;
 import com.jfixby.rana.api.pkg.PackageSearchParameters;
 import com.jfixby.rana.api.pkg.PackageSearchResult;
+import com.jfixby.rana.api.pkg.PackagesBank;
 import com.jfixby.rana.api.pkg.PackagesManagerComponent;
-import com.jfixby.rana.api.pkg.Resource;
-import com.jfixby.rana.api.pkg.ResourceSpecs;
-import com.jfixby.rana.api.pkg.ResourcesGroup;
+import com.jfixby.rana.api.pkg.PackagesTank;
 import com.jfixby.rana.api.pkg.io.BankHeaderInfo;
 import com.jfixby.rana.api.pkg.io.cfg.HttpAssetsFolder;
 import com.jfixby.rana.api.pkg.io.cfg.LocalAssetsFolder;
@@ -41,7 +41,7 @@ public class RedPackageManager implements PackagesManagerComponent {
 
 	private final List<RemoteBankSettings> remoteBanksToDepoloy = Collections.newList();
 
-	Map<ID, ResourcesGroup> resources = Collections.newMap();
+	Map<ID, PackagesBank> resources = Collections.newMap();
 	private final boolean readResourcesConfigFile;
 
 	public RedPackageManager (final RedResourcesManagerSpecs specs) {
@@ -58,7 +58,7 @@ public class RedPackageManager implements PackagesManagerComponent {
 					final String java_path = folder.path;
 					final File dir = LocalFileSystem.newFile(java_path);
 					try {
-						final Collection<ResourcesGroup> locals = this.loadAssetsFolder(dir);
+						final Collection<PackagesBank> locals = this.loadAssetsFolder(dir);
 					} catch (final IOException e) {
 						e.printStackTrace();
 					}
@@ -79,7 +79,7 @@ public class RedPackageManager implements PackagesManagerComponent {
 		}
 
 		try {
-			final Collection<ResourcesGroup> locals = this.loadAssetsFolder(this.assets_folder);
+			final Collection<PackagesBank> locals = this.loadAssetsFolder(this.assets_folder);
 
 		} catch (final IOException e) {
 			e.printStackTrace();
@@ -95,8 +95,8 @@ public class RedPackageManager implements PackagesManagerComponent {
 	}
 
 	@Override
-	public Collection<ResourcesGroup> findAndInstallResources (final File assets_folder) throws IOException {
-		final List<ResourcesGroup> resources = this.findBanks(assets_folder);
+	public Collection<PackagesBank> findAndInstallResources (final File assets_folder) throws IOException {
+		final List<PackagesBank> resources = this.findBanks(assets_folder);
 		this.installBanks(resources);
 		return resources;
 	}
@@ -123,12 +123,13 @@ public class RedPackageManager implements PackagesManagerComponent {
 		final File bank_root = bankHeader_.getRoot();
 		final FilesList tanks = bank_root.listSubFolders();
 		for (final File tank : tanks) {
-			final ResourceSpecs resSpec = this.newResourceSpecs();
+			final AssetsTankSpecs resSpec = this.newResourceSpecs();
 			resSpec.setFolder(tank);
 			resSpec.setCachingRequired(false);
 			final String tankName = tank.getName();
 			resSpec.setName(bank_root.getName() + "/" + tankName);
-			final Resource resource = this.newResource(resSpec);
+			resSpec.setShortName(tankName);
+			final PackagesTank resource = this.newResource(resSpec);
 			bank.addResource(resource);
 		}
 		return bank;
@@ -139,8 +140,8 @@ public class RedPackageManager implements PackagesManagerComponent {
 // }
 
 	@Override
-	public List<ResourcesGroup> findBanks (final File assets_folder) throws IOException {
-		final List<ResourcesGroup> result = Collections.newList();
+	public List<PackagesBank> findBanks (final File assets_folder) throws IOException {
+		final List<PackagesBank> result = Collections.newList();
 
 		{
 			final RedBank bank = this.findBank(assets_folder, RedPackageManager.COLLECT_TANKS);
@@ -184,11 +185,11 @@ public class RedPackageManager implements PackagesManagerComponent {
 	}
 
 	@Override
-	public ResourcesGroup getResourcesGroup (final ID name) {
+	public PackagesBank getBank (final ID name) {
 		return this.resources.get(name);
 	}
 
-	private void installBank (final ResourcesGroup group) {
+	private void installBank (final PackagesBank group) {
 		Debug.checkNull("resource_to_install", group);
 		final ID name = group.getName();
 
@@ -200,14 +201,14 @@ public class RedPackageManager implements PackagesManagerComponent {
 	}
 
 	@Override
-	public void installBanks (final Collection<ResourcesGroup> resources) {
-		for (final ResourcesGroup r : resources) {
+	public void installBanks (final Collection<PackagesBank> resources) {
+		for (final PackagesBank r : resources) {
 			this.installBank(r);
 		}
 	}
 
 	@Override
-	public ResourcesGroup installRemoteBank (final HttpURL bankUrl, final File assets_cache_folder, final Iterable<String> tanks)
+	public PackagesBank installRemoteBank (final HttpURL bankUrl, final File assets_cache_folder, final Iterable<String> tanks)
 		throws IOException {
 		Debug.checkNull("bankUrl", bankUrl);
 		Debug.checkNull("tanks", tanks);
@@ -226,7 +227,7 @@ public class RedPackageManager implements PackagesManagerComponent {
 		}
 		final File bank_cache_folder = assets_cache_folder.child(bank.getName() + "");
 		for (final String tank : tanks) {
-			final ResourceSpecs resSpec = this.newResourceSpecs();
+			final AssetsTankSpecs resSpec = this.newResourceSpecs();
 			final File tankFolder = httpRemote.child(tank);
 			resSpec.setFolder(tankFolder);
 			resSpec.setCachingRequired(true);
@@ -236,7 +237,7 @@ public class RedPackageManager implements PackagesManagerComponent {
 			resSpec.setCacheFolder(tankCache);
 			resSpec.setName(tank);
 
-			final Resource resource = this.newResource(resSpec);
+			final PackagesTank resource = this.newResource(resSpec);
 
 			bank.addResource(resource);
 
@@ -245,12 +246,12 @@ public class RedPackageManager implements PackagesManagerComponent {
 		return bank;
 	}
 
-	Collection<ResourcesGroup> loadAssetsFolder (final File assets_folder) throws IOException {
+	Collection<PackagesBank> loadAssetsFolder (final File assets_folder) throws IOException {
 		Debug.checkNull("assets_folder", assets_folder);
 		if (assets_folder.exists() && assets_folder.isFolder()) {
-			final Collection<ResourcesGroup> locals = this.findAndInstallResources(assets_folder);
+			final Collection<PackagesBank> locals = this.findAndInstallResources(assets_folder);
 // locals.print("locals");
-			for (final ResourcesGroup local : locals) {
+			for (final PackagesBank local : locals) {
 				local.rebuildAllIndexes();
 			}
 			return locals;
@@ -282,7 +283,7 @@ public class RedPackageManager implements PackagesManagerComponent {
 	}
 
 	void loadRemoteBank (final HttpURL bankURL, final Iterable<String> tanks, final File assets_cache_folder) throws IOException {
-		final ResourcesGroup bank = this.installRemoteBank(bankURL, assets_cache_folder, tanks);
+		final PackagesBank bank = this.installRemoteBank(bankURL, assets_cache_folder, tanks);
 		bank.rebuildAllIndexes();
 	}
 
@@ -292,12 +293,12 @@ public class RedPackageManager implements PackagesManagerComponent {
 // }
 
 	@Override
-	public Resource newResource (final ResourceSpecs resSpec) throws IOException {
+	public PackagesTank newResource (final AssetsTankSpecs resSpec) throws IOException {
 		return new RedResource(resSpec);
 	}
 
 	@Override
-	public ResourceSpecs newResourceSpecs () {
+	public AssetsTankSpecs newResourceSpecs () {
 		return new RedResourceSpecs();
 	}
 

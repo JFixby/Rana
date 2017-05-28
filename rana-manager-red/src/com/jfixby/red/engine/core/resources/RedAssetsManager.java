@@ -5,6 +5,7 @@ import java.io.IOException;
 
 import com.jfixby.rana.api.asset.AssetHandler;
 import com.jfixby.rana.api.asset.AssetsConsumer;
+import com.jfixby.rana.api.asset.AssetsContainer;
 import com.jfixby.rana.api.asset.AssetsManagerComponent;
 import com.jfixby.rana.api.asset.AssetsPurgeResult;
 import com.jfixby.rana.api.asset.LoadedAssets;
@@ -103,9 +104,14 @@ public class RedAssetsManager implements AssetsManagerComponent {
 
 		final PackageReaderInput readArgs = new PackageReaderInput();
 		readArgs.packageRootFile = package_handler.getRootFile(true);
-		readArgs.assetsContainer = LoadedAssets.newAssetsContainer();
+		final AssetsContainer container = LoadedAssets.newAssetsContainer();
+		readArgs.assetsContainer = container;
+		readArgs.packageInfo.packageName = package_handler.getPackageName();
 		package_reader.doReadPackage(readArgs);
-
+		container.printAll();
+		LoadedAssets.registerAssetsContainer(container.seal());
+		this.conrtainersReg.registerContainer(container);
+		L.d("MISSING OWNER!");
 // package_handler.doReadPackage(listener, package_reader);
 // debigTimer.printTimeAbove(50L, "LOAD-TIME: Asset[" + dependency + "] loaded");
 
@@ -148,6 +154,7 @@ public class RedAssetsManager implements AssetsManagerComponent {
 		final Collection<SealedAssetsContainer> unused = LoadedAssets.listUnusedContainers();
 		for (final SealedAssetsContainer c : unused) {
 			final ContainerOwner owner = this.conrtainersReg.getContainerOwner(c);
+			Debug.checkNull("Owner of " + c + " not found", owner);
 			owner.onAssetsUnload(c);
 			if (!this.conrtainersReg.hasMoreContainers(owner)) {
 				this.conrtainersReg.unregister(owner);

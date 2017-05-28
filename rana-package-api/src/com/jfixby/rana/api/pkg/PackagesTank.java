@@ -3,7 +3,7 @@ package com.jfixby.rana.api.pkg;
 
 import java.io.IOException;
 
-public interface Resource {
+public interface PackagesTank {
 
 	PackageSearchResult findPackages (PackageSearchParameters search_params);
 
@@ -12,5 +12,9 @@ public interface Resource {
 	public String getName ();
 
 	void printIndex ();
+
+	String getShortName ();
+
+	void installPackage (PackagePackingArgs pkgSpec) throws IOException;
 
 }

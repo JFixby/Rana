@@ -1,8 +1,8 @@
 
 package com.jfixby.rana.api.loader;
 
-public interface PackageInfo {
+public class PackageInfo {
 
-	String getPackageName ();
+	public String packageName;
 
 }

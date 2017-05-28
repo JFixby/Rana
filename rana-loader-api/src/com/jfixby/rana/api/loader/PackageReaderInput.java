@@ -10,6 +10,6 @@ public class PackageReaderInput {
 
 	public AssetsContainer assetsContainer;
 
-	public PackageInfo packageInfo;
+	public final PackageInfo packageInfo = new PackageInfo();
 
 }

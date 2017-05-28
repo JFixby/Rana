@@ -3,12 +3,15 @@ package com.jfixby.red.triplane.resources.fsbased;
 
 import java.io.IOException;
 
+import com.jfixby.rana.api.pkg.AssetsTankSpecs;
+import com.jfixby.rana.api.pkg.PackagePackingArgs;
 import com.jfixby.rana.api.pkg.PackageSearchParameters;
 import com.jfixby.rana.api.pkg.PackageSearchResult;
-import com.jfixby.rana.api.pkg.Resource;
-import com.jfixby.rana.api.pkg.ResourceSpecs;
+import com.jfixby.rana.api.pkg.PackagesTank;
+import com.jfixby.rana.api.pkg.PackerSpecs;
 import com.jfixby.rana.api.pkg.io.BankIndex;
 import com.jfixby.rana.api.pkg.io.PackageDescriptor;
+import com.jfixby.red.engine.core.resources.PackageUtils;
 import com.jfixby.scarabei.api.debug.Debug;
 import com.jfixby.scarabei.api.file.File;
 import com.jfixby.scarabei.api.file.FileInputStream;
@@ -17,7 +20,7 @@ import com.jfixby.scarabei.api.file.FilesList;
 import com.jfixby.scarabei.api.json.Json;
 import com.jfixby.scarabei.api.log.L;
 
-public class RedResource implements Resource {
+public class RedResource implements PackagesTank {
 
 	private final File bank_folder;
 
@@ -26,11 +29,14 @@ public class RedResource implements Resource {
 	ResourceIndex index = new ResourceIndex(this);
 	private final String name;
 
-	RedResource (final ResourceSpecs specs) throws IOException {
+	private final String short_name;
+
+	RedResource (final AssetsTankSpecs specs) throws IOException {
 
 		final File bank_folder = specs.getFolder();
 		this.caching_required = specs.isChachingRequired();
 		this.name = Debug.checkNull("name", specs.getName());
+		this.short_name = Debug.checkNull("name", specs.getShortName());
 		if (this.caching_required) {
 			this.cache = specs.getCacheFolder();
 			this.cache.makeFolder();
@@ -42,6 +48,11 @@ public class RedResource implements Resource {
 		}
 		this.bank_folder = bank_folder;
 
+	}
+
+	@Override
+	public String getShortName () {
+		return this.short_name;
 	}
 
 	@Override
@@ -164,6 +175,9 @@ public class RedResource implements Resource {
 				final String json = json_file.readToString();
 
 				final PackageDescriptor descriptor = Json.deserializeFromString(PackageDescriptor.class, json);
+				if (descriptor.version == null) {
+					return;
+				}
 				this.index(descriptor, package_folder);
 				return;
 			} catch (final IOException e2) {
@@ -188,6 +202,21 @@ public class RedResource implements Resource {
 // Err.reportError(json_file + " " + e);
 // }
 		}
+	}
+
+	@Override
+	public void installPackage (final PackagePackingArgs pkgSpec) throws IOException {
+
+		final PackerSpecs specs = new PackerSpecs();
+		specs.packageFolder = this.bank_folder.child(pkgSpec.packageName);
+		specs.packageFormat = pkgSpec.packageFormat;
+		specs.rootFileName = pkgSpec.rootFileName;
+		specs.version = pkgSpec.version;
+		specs.packedFiles.addAll(pkgSpec.packedFiles);
+		specs.packedAssets.addAll(pkgSpec.packedAssets);
+		specs.requiredAssets.addAll(pkgSpec.requiredAssets);
+		PackageUtils.pack(specs);
+
 	}
 
 }

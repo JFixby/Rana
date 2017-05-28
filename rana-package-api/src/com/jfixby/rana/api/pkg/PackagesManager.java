@@ -59,11 +59,11 @@ public class PackagesManager {
 // invoke().printInstalledPackageReaders();
 // }
 
-	public static ResourceSpecs newResourceSpecs () {
+	public static AssetsTankSpecs newResourceSpecs () {
 		return invoke().newResourceSpecs();
 	}
 
-	public static Resource newResource (final ResourceSpecs specs) throws IOException {
+	public static PackagesTank newResource (final AssetsTankSpecs specs) throws IOException {
 		return invoke().newResource(specs);
 	}
 
@@ -79,8 +79,8 @@ public class PackagesManager {
 		invoke().printAllIndexes();
 	}
 
-	public static ResourcesGroup getResourcesGroup (final ID name) {
-		return invoke().getResourcesGroup(name);
+	public static PackagesBank getBank (final ID name) {
+		return invoke().getBank(name);
 	}
 
 }

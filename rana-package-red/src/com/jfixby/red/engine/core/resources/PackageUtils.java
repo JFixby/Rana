@@ -3,6 +3,7 @@ package com.jfixby.red.engine.core.resources;
 
 import java.io.IOException;
 
+import com.jfixby.rana.api.pkg.PackerSpecs;
 import com.jfixby.rana.api.pkg.io.PackageDescriptor;
 import com.jfixby.scarabei.api.assets.ID;
 import com.jfixby.scarabei.api.collections.Collection;
@@ -15,19 +16,19 @@ import com.jfixby.scarabei.api.sys.Sys;
 public class PackageUtils {
 	public static void pack (final PackerSpecs specs) throws IOException {
 
-		final File package_folder = specs.getPackageFolder();
+		final File package_folder = specs.packageFolder;
 		final File package_content_folder = package_folder.child(PackageDescriptor.PACKAGE_CONTENT_FOLDER);
 		package_content_folder.makeFolder();
 		package_content_folder.clearFolder();
 
-		final String package_format = specs.getPackageFormat();
-		final String version = specs.getVersion();
-		final Collection<ID> provisions = specs.getPackedAssets();
-		final Collection<ID> dependencies = specs.getRequiredAssets();
-		final String root_file_name = specs.getRootFileName();
+		final String package_format = specs.packageFormat;
+		final String version = specs.version;
+		final Collection<ID> provisions = specs.packedAssets;
+		final Collection<ID> dependencies = specs.requiredAssets;
+		final String root_file_name = specs.rootFileName;
 		producePackageDescriptor(package_folder, package_format, version, provisions, dependencies, root_file_name);
 
-		final Collection<File> files_list = specs.getPackedFiles();
+		final Collection<File> files_list = specs.packedFiles;
 		package_content_folder.getFileSystem().copyFilesTo(files_list, package_content_folder);
 
 	}

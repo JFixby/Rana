@@ -26,25 +26,25 @@ public interface PackagesManagerComponent {
 
 // void printInstalledPackageReaders ();
 
-	ResourceSpecs newResourceSpecs ();
+	AssetsTankSpecs newResourceSpecs ();
 
-	Resource newResource (ResourceSpecs specs) throws IOException;
+	PackagesTank newResource (AssetsTankSpecs specs) throws IOException;
 
 // void updateAll (ResourceRebuildIndexListener listener);
 
-	Collection<ResourcesGroup> findBanks (File assets_folder) throws IOException;
+	Collection<PackagesBank> findBanks (File assets_folder) throws IOException;
 
 	void printAllResources ();
 
 	void printAllIndexes ();
 
-	ResourcesGroup getResourcesGroup (ID name);
+	PackagesBank getBank (ID name);
 
-	void installBanks (Collection<ResourcesGroup> resources);
+	void installBanks (Collection<PackagesBank> resources);
 
-	Collection<ResourcesGroup> findAndInstallResources (File assets_folder) throws IOException;
+	Collection<PackagesBank> findAndInstallResources (File assets_folder) throws IOException;
 
-	ResourcesGroup installRemoteBank (final HttpURL bankUrl, final File assets_cache_folder, final Iterable<String> tanks)
+	PackagesBank installRemoteBank (final HttpURL bankUrl, final File assets_cache_folder, final Iterable<String> tanks)
 		throws IOException;
 
 }

@@ -2,7 +2,6 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6/"/>
-	<classpathentry kind="con" path="org.eclipse.buildship.core.gradleclasspathcontainer"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/rana-api"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/scarabei-apache-cmns"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/scarabei-api"/>
@@ -42,5 +41,19 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/rana-asset-red"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/rana-loader-api"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/rana-loader-red"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/BlueMesa-android"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/BlueMesa-core"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/BlueMesa-desktop"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/BlueMesa-server"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/rana-manager-api"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/rana-manager-red"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/red-triplane-api-fokker"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/red-triplane-api-ui"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/red-triplane-fokker"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/RedTriplane"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/Scarabei-test"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/scarabei-test-red-aws"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/scarabei-test-red-desktop"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/scarabei-test-red-rmi"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

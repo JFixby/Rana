@@ -3,7 +3,7 @@ package com.jfixby.rana.api.pkg;
 
 import com.jfixby.scarabei.api.file.File;
 
-public interface ResourceSpecs {
+public interface AssetsTankSpecs {
 
 	File getFolder ();
 
@@ -20,5 +20,9 @@ public interface ResourceSpecs {
 	String getName ();
 
 	void setName (String bankName);
+
+	void setShortName (String tankName);
+
+	String getShortName ();
 
 }

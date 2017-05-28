@@ -23,7 +23,7 @@ public class RedAssetsContainer implements SealedAssetsContainer, AssetsContaine
 
 	@Override
 	public void printAll () {
-		this.assets.print("assets");
+		this.assets.print("assets container");
 	}
 
 	@Override

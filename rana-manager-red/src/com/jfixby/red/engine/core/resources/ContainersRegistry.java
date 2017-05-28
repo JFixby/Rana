@@ -1,6 +1,7 @@
 
 package com.jfixby.red.engine.core.resources;
 
+import com.jfixby.rana.api.asset.AssetsContainer;
 import com.jfixby.rana.api.asset.SealedAssetsContainer;
 import com.jfixby.scarabei.api.collections.Collections;
 import com.jfixby.scarabei.api.collections.Map;
@@ -32,6 +33,10 @@ public class ContainersRegistry {
 			return false;
 		}
 		return true;
+	}
+
+	public void registerContainer (final AssetsContainer container) {
+
 	}
 
 }

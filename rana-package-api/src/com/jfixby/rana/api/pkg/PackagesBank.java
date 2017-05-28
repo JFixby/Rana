@@ -5,7 +5,7 @@ import java.io.IOException;
 
 import com.jfixby.scarabei.api.assets.ID;
 
-public interface ResourcesGroup {
+public interface PackagesBank {
 
 	ID getName ();
 
@@ -14,5 +14,7 @@ public interface ResourcesGroup {
 	PackageSearchResult findPackages (PackageSearchParameters search_params);
 
 	void rebuildAllIndexes () throws IOException;
+
+	PackagesTank getTank (String tankName);
 
 }
