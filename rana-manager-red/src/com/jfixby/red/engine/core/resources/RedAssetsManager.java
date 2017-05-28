@@ -110,6 +110,7 @@ public class RedAssetsManager implements AssetsManagerComponent {
 		readArgs.packageInfo.packageFormat = package_handler.getFormat();
 		readArgs.packageInfo.packedAssets = package_handler.listPackedAssets();
 		readArgs.packageInfo.dependencies = package_handler.listDependencies();
+		this.autoResolveDeps(package_handler.listDependencies());
 		package_reader.doReadPackage(readArgs);
 		container.printAll();
 		LoadedAssets.registerAssetsContainer(container.seal());
@@ -119,6 +120,10 @@ public class RedAssetsManager implements AssetsManagerComponent {
 // debigTimer.printTimeAbove(50L, "LOAD-TIME: Asset[" + dependency + "] loaded");
 
 // return true;
+	}
+
+	private void autoResolveDeps (final Collection<ID> listDependencies) throws IOException {
+		this.autoResolveAssets(listDependencies);
 	}
 
 	@Override
